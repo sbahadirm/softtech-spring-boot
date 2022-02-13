@@ -2,6 +2,7 @@ package com.softtech.softtechspringboot.app.cus.service.entityservice;
 
 import com.softtech.softtechspringboot.app.cus.dao.CusCustomerDao;
 import com.softtech.softtechspringboot.app.cus.entity.CusCustomer;
+import com.softtech.softtechspringboot.app.cus.enums.CusErrorMessage;
 import com.softtech.softtechspringboot.app.gen.exceptions.ItemNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,9 +44,13 @@ public class CusCustomerEntityService {
         if (customerOptional.isPresent()){
             cusCustomer = customerOptional.get();
         } else {
-            throw new ItemNotFoundException("Customer not found!");
+            throw new ItemNotFoundException(CusErrorMessage.CUSTOMER_ERROR_MESSAGE);
         }
 
         return cusCustomer;
+    }
+
+    public boolean existsById(Long id){
+        return cusCustomerDao.existsById(id);
     }
 }
