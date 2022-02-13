@@ -1,0 +1,20 @@
+Get: Sadece data alındığı durumlarda kullanılır.
+
+Post: İstek yapılan yere bir data göndermek için kullanılır.
+
+Head: Get gibidir ama buradan payload dönmez. Yani bir data var mı,
+yok mu bunu control etmek için kullanılabilir.
+
+Put: İstek yapılan yerdeki bir veriyi güncellemek için kullanılır.
+
+Delete: Bir data silmek için kullanılır.
+
+Connect: İstek yapılacak yere bir tünel oluşturmak için kullanılır.
+
+Options: İletişim ayarlarını tanımlar.
+
+Trace: Yapılan istek , istek yapılan yere ulaşana kadar hangi değişikliklere uğradı vs bunu belirtir.
+
+Patch: Put gibidir fakat putta tüm kaynağı göndermeniz gerekirken patch ile
+sadece kaynakta değiştirmek istediğiniz kısımı göndererek güncelleme işlemi yapabilirsiniz.
+
