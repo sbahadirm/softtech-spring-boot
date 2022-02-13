@@ -30,6 +30,14 @@ public class CusCustomerController {
         return ResponseEntity.ok(cusCustomerDtoList);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity findById(@PathVariable Long id){
+
+        CusCustomerDto cusCustomerDto = cusCustomerService.findById(id);
+
+        return ResponseEntity.ok(cusCustomerDto);
+    }
+
     @PostMapping
     public ResponseEntity save(@RequestBody CusCustomerSaveRequestDto cusCustomerSaveRequestDto){
 

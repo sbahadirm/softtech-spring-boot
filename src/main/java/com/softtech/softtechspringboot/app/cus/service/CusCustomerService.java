@@ -6,11 +6,13 @@ import com.softtech.softtechspringboot.app.cus.dto.CusCustomerDto;
 import com.softtech.softtechspringboot.app.cus.dto.CusCustomerSaveRequestDto;
 import com.softtech.softtechspringboot.app.cus.entity.CusCustomer;
 import com.softtech.softtechspringboot.app.cus.service.entityservice.CusCustomerEntityService;
+import com.softtech.softtechspringboot.learning.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Bahadır Memiş
@@ -46,5 +48,19 @@ public class CusCustomerService {
 
     public void delete(Long id) {
 
+        CusCustomer cusCustomer = cusCustomerEntityService.getByIdWithControl(id);
+
+        cusCustomerEntityService.delete(cusCustomer);
     }
+
+    public CusCustomerDto findById(Long id) {
+
+        CusCustomer cusCustomer = cusCustomerEntityService.getByIdWithControl(id);
+
+        CusCustomerDto cusCustomerDto = CusCustomerMapper.INSTANCE.convertToCusCustomerDto(cusCustomer);
+
+        return cusCustomerDto;
+    }
+
+
 }
