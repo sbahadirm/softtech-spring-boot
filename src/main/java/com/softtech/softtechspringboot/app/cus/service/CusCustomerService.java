@@ -44,4 +44,7 @@ public class CusCustomerService {
     }
 
 
+    public void delete(Long id) {
+
+    }
 }

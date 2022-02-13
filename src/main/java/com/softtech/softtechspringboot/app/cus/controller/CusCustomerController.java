@@ -27,7 +27,7 @@ public class CusCustomerController {
 
         List<CusCustomerDto> cusCustomerDtoList = cusCustomerService.findAll();
 
-        return new ResponseEntity(cusCustomerDtoList, HttpStatus.OK);
+        return ResponseEntity.ok(cusCustomerDtoList);
     }
 
     @PostMapping
@@ -35,6 +35,14 @@ public class CusCustomerController {
 
         CusCustomerDto cusCustomerDto = cusCustomerService.save(cusCustomerSaveRequestDto);
 
-        return new ResponseEntity(cusCustomerDto, HttpStatus.OK);
+        return ResponseEntity.ok(cusCustomerDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Long id){
+
+        cusCustomerService.delete(id);
+
+        return ResponseEntity.ok(Void.TYPE);
     }
 }
