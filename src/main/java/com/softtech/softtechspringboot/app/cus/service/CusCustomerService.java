@@ -1,7 +1,9 @@
 package com.softtech.softtechspringboot.app.cus.service;
 
 import com.softtech.softtechspringboot.app.cus.converter.CusCustomerConverter;
+import com.softtech.softtechspringboot.app.cus.converter.CusCustomerMapper;
 import com.softtech.softtechspringboot.app.cus.dto.CusCustomerDto;
+import com.softtech.softtechspringboot.app.cus.dto.CusCustomerSaveRequestDto;
 import com.softtech.softtechspringboot.app.cus.entity.CusCustomer;
 import com.softtech.softtechspringboot.app.cus.service.entityservice.CusCustomerEntityService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,17 @@ public class CusCustomerService {
         List<CusCustomerDto> cusCustomerDtoList = cusCustomerConverter.convertToCusCustomerDtoList(cusCustomerList);
 
         return cusCustomerDtoList;
+    }
+
+    public CusCustomerDto save(CusCustomerSaveRequestDto cusCustomerSaveRequestDto) {
+
+        CusCustomer cusCustomer = CusCustomerMapper.INSTANCE.convertToCusCustomer(cusCustomerSaveRequestDto);
+
+        cusCustomer = cusCustomerEntityService.save(cusCustomer);
+
+        CusCustomerDto cusCustomerDto = CusCustomerMapper.INSTANCE.convertToCusCustomerDto(cusCustomer);
+
+        return cusCustomerDto;
     }
 
 

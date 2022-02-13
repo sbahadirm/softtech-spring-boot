@@ -25,4 +25,12 @@ public class CusCustomerEntityService {
     public Optional<CusCustomer> findById(Long id){
         return cusCustomerDao.findById(id);
     }
+
+    public CusCustomer save(CusCustomer cusCustomer){
+        return cusCustomerDao.save(cusCustomer);
+    }
+
+    public void delete(CusCustomer cusCustomer){
+        cusCustomerDao.delete(cusCustomer);
+    }
 }

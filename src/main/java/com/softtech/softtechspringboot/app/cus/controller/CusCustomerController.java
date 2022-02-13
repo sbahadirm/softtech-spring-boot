@@ -1,13 +1,13 @@
 package com.softtech.softtechspringboot.app.cus.controller;
 
 import com.softtech.softtechspringboot.app.cus.dto.CusCustomerDto;
+import com.softtech.softtechspringboot.app.cus.dto.CusCustomerSaveRequestDto;
+import com.softtech.softtechspringboot.app.cus.entity.CusCustomer;
 import com.softtech.softtechspringboot.app.cus.service.CusCustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +28,13 @@ public class CusCustomerController {
         List<CusCustomerDto> cusCustomerDtoList = cusCustomerService.findAll();
 
         return new ResponseEntity(cusCustomerDtoList, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity save(@RequestBody CusCustomerSaveRequestDto cusCustomerSaveRequestDto){
+
+        CusCustomerDto cusCustomerDto = cusCustomerService.save(cusCustomerSaveRequestDto);
+
+        return new ResponseEntity(cusCustomerDto, HttpStatus.OK);
     }
 }
