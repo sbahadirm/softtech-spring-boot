@@ -1,10 +1,12 @@
 package com.softtech.softtechspringboot.app.cus.enums;
 
+import com.softtech.softtechspringboot.app.gen.enums.BaseErrorMessage;
+
 /**
  * @author Bahadır Memiş
  * @since 1.0.0
  */
-public enum CusErrorMessage {
+public enum CusErrorMessage implements BaseErrorMessage {
 
     CUSTOMER_ERROR_MESSAGE("Customer not found!"),
     ;
