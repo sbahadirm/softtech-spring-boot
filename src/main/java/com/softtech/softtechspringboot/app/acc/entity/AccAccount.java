@@ -2,6 +2,7 @@ package com.softtech.softtechspringboot.app.acc.entity;
 
 import com.softtech.softtechspringboot.app.acc.enums.AccAccountType;
 import com.softtech.softtechspringboot.app.acc.enums.AccCurrencyType;
+import com.softtech.softtechspringboot.app.gen.entity.BaseEntity;
 import com.softtech.softtechspringboot.app.gen.enums.GenStatusType;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ import java.math.BigDecimal;
 @Table(name = "ACC_ACCOUNT")
 @Getter
 @Setter
-public class AccAccount {
+public class AccAccount extends BaseEntity {
 
     @Id
     @SequenceGenerator(name = "AccAccount" , sequenceName = "ACC_ACCOUNT_ID_SEQ")

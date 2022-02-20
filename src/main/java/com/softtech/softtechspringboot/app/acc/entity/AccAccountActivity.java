@@ -1,6 +1,7 @@
 package com.softtech.softtechspringboot.app.acc.entity;
 
 import com.softtech.softtechspringboot.app.acc.enums.AccAccountActivityType;
+import com.softtech.softtechspringboot.app.gen.entity.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +17,7 @@ import java.util.Date;
 @Table(name = "ACC_ACCOUNT_ACTIVITY")
 @Getter
 @Setter
-public class AccAccountActivity {
+public class AccAccountActivity extends BaseEntity {
 
     @GeneratedValue(generator = "AccAccountActivity")
     @SequenceGenerator(name = "AccAccountActivity", sequenceName = "ACC_ACCOUNT_ACTIVITY_ID_SEQ")
