@@ -1,5 +1,6 @@
 package com.softtech.softtechspringboot.app.gen.exception;
 
+import com.softtech.softtechspringboot.app.gen.dto.RestResponse;
 import com.softtech.softtechspringboot.app.gen.exceptions.GenBusinessException;
 import com.softtech.softtechspringboot.app.gen.exceptions.ItemNotFoundException;
 import org.springframework.http.HttpHeaders;
@@ -31,19 +32,25 @@ public class GenCustomizedResponseEntityExceptionHandler extends ResponseEntityE
 
         GenExceptionResponse genExceptionResponse = new GenExceptionResponse(errorDate, message, description);
 
-        return new ResponseEntity<>(genExceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        RestResponse<GenExceptionResponse> restResponse = RestResponse.error(genExceptionResponse);
+        restResponse.setMessages(message);
+
+        return new ResponseEntity<>(restResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler
     public final ResponseEntity<Object> handleAllItemNotFoundException(ItemNotFoundException ex, WebRequest webRequest){
 
         Date errorDate = new Date();
-        String message = ex.getMessage();
+        String message = ex.getBaseErrorMessage().getMessage();
         String description = webRequest.getDescription(false);
 
         GenExceptionResponse genExceptionResponse = new GenExceptionResponse(errorDate, message, description);
 
-        return new ResponseEntity<>(genExceptionResponse, HttpStatus.NOT_FOUND);
+        RestResponse<GenExceptionResponse> restResponse = RestResponse.error(genExceptionResponse);
+        restResponse.setMessages(message);
+
+        return new ResponseEntity<>(restResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
@@ -55,7 +62,10 @@ public class GenCustomizedResponseEntityExceptionHandler extends ResponseEntityE
 
         GenExceptionResponse genExceptionResponse = new GenExceptionResponse(errorDate, message, description);
 
-        return new ResponseEntity<>(genExceptionResponse, HttpStatus.NOT_FOUND);
+        RestResponse<GenExceptionResponse> restResponse = RestResponse.error(genExceptionResponse);
+        restResponse.setMessages(message);
+
+        return new ResponseEntity<>(restResponse, HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -66,7 +76,9 @@ public class GenCustomizedResponseEntityExceptionHandler extends ResponseEntityE
         String description = ex.getBindingResult().toString();
 
         GenExceptionResponse genExceptionResponse = new GenExceptionResponse(errorDate, message, description);
+        RestResponse<GenExceptionResponse> restResponse = RestResponse.error(genExceptionResponse);
+        restResponse.setMessages(message);
 
-        return new ResponseEntity<>(genExceptionResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(restResponse, HttpStatus.BAD_REQUEST);
     }
 }
