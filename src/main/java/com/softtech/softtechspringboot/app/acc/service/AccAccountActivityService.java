@@ -1,5 +1,6 @@
 package com.softtech.softtechspringboot.app.acc.service;
 
+import com.softtech.softtechspringboot.app.acc.converter.AccAccountMapper;
 import com.softtech.softtechspringboot.app.acc.dto.AccAccountActivityDto;
 import com.softtech.softtechspringboot.app.acc.dto.AccMoneyWithdrawRequestDto;
 import com.softtech.softtechspringboot.app.acc.entity.AccAccount;
@@ -25,7 +26,15 @@ public class AccAccountActivityService {
     private final AccAccountActivityEntityService accAccountActivityEntityService;
 
     public AccAccountActivityDto withdraw(AccMoneyWithdrawRequestDto accMoneyWithdrawRequestDto) {
-        return null;
+
+        Long accAccountId = accMoneyWithdrawRequestDto.getAccAccountId();
+        BigDecimal amount = accMoneyWithdrawRequestDto.getAmount();
+
+        AccAccountActivity accAccountActivity = moneyOut(accAccountId, amount);
+
+        AccAccountActivityDto accAccountActivityDto = AccAccountMapper.INSTANCE.convertToAccAccountActivityDto(accAccountActivity);
+
+        return accAccountActivityDto;
     }
 
     public AccAccountActivity moneyOut(Long accountId, BigDecimal amount) {
