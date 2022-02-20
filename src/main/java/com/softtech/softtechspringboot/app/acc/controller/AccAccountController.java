@@ -1,7 +1,6 @@
 package com.softtech.softtechspringboot.app.acc.controller;
 
 import com.softtech.softtechspringboot.app.acc.dto.*;
-import com.softtech.softtechspringboot.app.acc.entity.AccAccount;
 import com.softtech.softtechspringboot.app.acc.service.AccAccountActivityService;
 import com.softtech.softtechspringboot.app.acc.service.AccAccountService;
 import com.softtech.softtechspringboot.app.acc.service.AccMoneyTransferService;
@@ -66,9 +65,17 @@ public class AccAccountController {
     }
 
     @PostMapping("/withdraw")
-    public ResponseEntity withdraw(@RequestBody AccMoneyWithdrawRequestDto accMoneyWithdrawRequestDto){
+    public ResponseEntity withdraw(@RequestBody AccMoneyActivityRequestDto accMoneyActivityRequestDto){
 
-        AccAccountActivityDto accAccountActivityDto = accAccountActivityService.withdraw(accMoneyWithdrawRequestDto);
+        AccAccountActivityDto accAccountActivityDto = accAccountActivityService.withdraw(accMoneyActivityRequestDto);
+
+        return ResponseEntity.ok(accAccountActivityDto);
+    }
+
+    @PostMapping("/deposit")
+    public ResponseEntity deposit(@RequestBody AccMoneyActivityRequestDto accMoneyActivityRequestDto){
+
+        AccAccountActivityDto accAccountActivityDto = accAccountActivityService.deposit(accMoneyActivityRequestDto);
 
         return ResponseEntity.ok(accAccountActivityDto);
     }

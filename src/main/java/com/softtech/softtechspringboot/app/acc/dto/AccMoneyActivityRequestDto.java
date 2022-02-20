@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  * @since 1.0.0
  */
 @Data
-public class AccMoneyWithdrawRequestDto {
+public class AccMoneyActivityRequestDto {
 
     private Long accAccountId;
     private BigDecimal amount;

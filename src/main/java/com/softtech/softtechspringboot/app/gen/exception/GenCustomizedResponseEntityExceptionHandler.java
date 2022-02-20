@@ -1,7 +1,6 @@
 package com.softtech.softtechspringboot.app.gen.exception;
 
 import com.softtech.softtechspringboot.app.gen.exceptions.ItemNotFoundException;
-import com.softtech.softtechspringboot.learning.exception.UserNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
