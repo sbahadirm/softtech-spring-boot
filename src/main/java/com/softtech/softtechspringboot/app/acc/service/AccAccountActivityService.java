@@ -6,8 +6,10 @@ import com.softtech.softtechspringboot.app.acc.dto.AccMoneyActivityRequestDto;
 import com.softtech.softtechspringboot.app.acc.entity.AccAccount;
 import com.softtech.softtechspringboot.app.acc.entity.AccAccountActivity;
 import com.softtech.softtechspringboot.app.acc.enums.AccAccountActivityType;
+import com.softtech.softtechspringboot.app.acc.enums.AccErrorMessage;
 import com.softtech.softtechspringboot.app.acc.service.entityservice.AccAccountActivityEntityService;
 import com.softtech.softtechspringboot.app.acc.service.entityservice.AccAccountEntityService;
+import com.softtech.softtechspringboot.app.gen.exceptions.GenBusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -94,7 +96,7 @@ public class AccAccountActivityService {
 
     private void validateBalance(BigDecimal newBalance) {
         if (newBalance.compareTo(BigDecimal.ZERO) < 0){
-            throw new RuntimeException("Insufficient balance!"); //TODO: make business exception
+            throw new GenBusinessException(AccErrorMessage.INSUFFICIENT_BALANCE);
         }
     }
 }
