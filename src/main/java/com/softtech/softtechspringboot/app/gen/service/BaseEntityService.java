@@ -1,13 +1,14 @@
 package com.softtech.softtechspringboot.app.gen.service;
 
+import com.softtech.softtechspringboot.app.gen.entity.BaseAdditionalFields;
 import com.softtech.softtechspringboot.app.gen.entity.BaseEntity;
 import com.softtech.softtechspringboot.app.gen.enums.GenErrorMessage;
 import com.softtech.softtechspringboot.app.gen.exceptions.ItemNotFoundException;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +31,31 @@ public abstract class BaseEntityService<E extends BaseEntity, D extends JpaRepos
     }
 
     public E save(E entity){
-        return dao.save(entity);
+
+        setAdditionalFields(entity);
+        entity = dao.save(entity);
+
+        return entity;
+    }
+
+    private void setAdditionalFields(E entity) {
+
+        BaseAdditionalFields baseAdditionalFields = entity.getBaseAdditionalFields();
+
+        Long currentCustomerId = getCurrentCustomerId();
+
+        if (baseAdditionalFields == null){
+            baseAdditionalFields = new BaseAdditionalFields();
+            entity.setBaseAdditionalFields(baseAdditionalFields);
+        }
+
+        if (entity.getId() == null){
+            baseAdditionalFields.setCreateDate(new Date());
+            baseAdditionalFields.setCreatedBy(currentCustomerId);
+        }
+
+        baseAdditionalFields.setUpdateDate(new Date());
+        baseAdditionalFields.setUpdatedBy(currentCustomerId);
     }
 
     public void delete(E entity){
@@ -57,5 +82,11 @@ public abstract class BaseEntityService<E extends BaseEntity, D extends JpaRepos
 
     public D getDao() {
         return dao;
+    }
+
+    //TODO: control after jwt
+    private Long getCurrentCustomerId() {
+        Long currentCustomer = null;
+        return currentCustomer;
     }
 }
