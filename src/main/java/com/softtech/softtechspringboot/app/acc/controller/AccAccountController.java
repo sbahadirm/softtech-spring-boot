@@ -4,6 +4,7 @@ import com.softtech.softtechspringboot.app.acc.dto.*;
 import com.softtech.softtechspringboot.app.acc.service.AccAccountActivityService;
 import com.softtech.softtechspringboot.app.acc.service.AccAccountService;
 import com.softtech.softtechspringboot.app.acc.service.AccMoneyTransferService;
+import com.softtech.softtechspringboot.app.gen.dto.RestResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class AccAccountController {
 
         List<AccAccountDto> accAccountDtoList = accAccountService.findAll();
 
-        return ResponseEntity.ok(accAccountDtoList);
+        return ResponseEntity.ok(RestResponse.of(accAccountDtoList));
     }
 
     @GetMapping("/{id}")
@@ -36,7 +37,7 @@ public class AccAccountController {
 
         AccAccountDto accAccountDto = accAccountService.findById(id);
 
-        return ResponseEntity.ok(accAccountDto);
+        return ResponseEntity.ok(RestResponse.of(accAccountDto));
     }
 
     @PostMapping
@@ -44,7 +45,7 @@ public class AccAccountController {
 
         AccAccountDto accAccountDto = accAccountService.save(accAccountSaveRequestDto);
 
-        return ResponseEntity.ok(accAccountDto);
+        return ResponseEntity.ok(RestResponse.of(accAccountDto));
     }
 
     @PatchMapping("/cancel/{accountId}")
@@ -52,7 +53,7 @@ public class AccAccountController {
 
         accAccountService.cancel(accountId);
 
-        return ResponseEntity.ok(Void.TYPE);
+        return ResponseEntity.ok(RestResponse.empty());
     }
 
     @PostMapping("/money-transfer")
@@ -60,7 +61,7 @@ public class AccAccountController {
 
         AccMoneyTransferDto accMoneyTransferDto = accMoneyTransferService.transferMoney(accMoneyTransferSaveRequestDto);
 
-        return ResponseEntity.ok(accMoneyTransferDto);
+        return ResponseEntity.ok(RestResponse.of(accMoneyTransferDto));
 
     }
 
@@ -69,7 +70,7 @@ public class AccAccountController {
 
         AccAccountActivityDto accAccountActivityDto = accAccountActivityService.withdraw(accMoneyActivityRequestDto);
 
-        return ResponseEntity.ok(accAccountActivityDto);
+        return ResponseEntity.ok(RestResponse.of(accAccountActivityDto));
     }
 
     @PostMapping("/deposit")
@@ -77,6 +78,6 @@ public class AccAccountController {
 
         AccAccountActivityDto accAccountActivityDto = accAccountActivityService.deposit(accMoneyActivityRequestDto);
 
-        return ResponseEntity.ok(accAccountActivityDto);
+        return ResponseEntity.ok(RestResponse.of(accAccountActivityDto));
     }
 }
