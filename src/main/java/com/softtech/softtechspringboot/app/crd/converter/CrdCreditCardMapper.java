@@ -6,6 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * @author Bahadır Memiş
  * @since 1.0.0
@@ -16,4 +18,6 @@ public interface CrdCreditCardMapper {
     CrdCreditCardMapper INSTANCE = Mappers.getMapper(CrdCreditCardMapper.class);
 
     CrdCreditCardResponseDto convertToCrdCreditCardResponseDto(CrdCreditCard crdCreditCard);
+
+    List<CrdCreditCardResponseDto> convertToCrdCreditCardResponseDtoList(List<CrdCreditCard> crdCreditCardList);
 }

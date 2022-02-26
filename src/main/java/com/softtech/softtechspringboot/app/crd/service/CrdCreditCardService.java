@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Bahadır Memiş
@@ -40,6 +41,15 @@ public class CrdCreditCardService {
         CrdCreditCardResponseDto crdCreditCardResponseDto = createCardAndConvertToCrdCreditCardResponseDto(cusCustomerId, limit, cutoffDate, dueDate);
 
         return crdCreditCardResponseDto;
+    }
+
+    public List<CrdCreditCardResponseDto> findAll() {
+
+        List<CrdCreditCard> crdCreditCardList = crdCreditCardEntityService.findAll();
+
+        List<CrdCreditCardResponseDto> result = CrdCreditCardMapper.INSTANCE.convertToCrdCreditCardResponseDtoList(crdCreditCardList);
+
+        return result;
     }
 
     private CrdCreditCardResponseDto createCardAndConvertToCrdCreditCardResponseDto(Long cusCustomerId, BigDecimal limit, Date cutoffDate, Date dueDate) {
@@ -129,4 +139,5 @@ public class CrdCreditCardService {
         Long cardNo = 1234567890123456L;
         return cardNo;
     }
+
 }

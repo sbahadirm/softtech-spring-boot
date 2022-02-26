@@ -8,10 +8,9 @@ import com.softtech.softtechspringboot.app.crd.service.CrdCreditCardService;
 import com.softtech.softtechspringboot.app.gen.dto.RestResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author Bahadır Memiş
@@ -27,9 +26,16 @@ public class CrdCreditCardController {
     /**
      * findAll
      * findById
-     * save
      * delete(maybe passive) (cancel)
      */
+
+    @GetMapping
+    public ResponseEntity findAll(){
+
+        List<CrdCreditCardResponseDto> crdCreditCardResponseDtoList = crdCreditCardService.findAll();
+
+        return ResponseEntity.ok(RestResponse.of(crdCreditCardResponseDtoList));
+    }
 
     @PostMapping
     public ResponseEntity save(@RequestBody CrdCreditCardSaveRequestDto crdCreditCardSaveRequestDto){
