@@ -23,11 +23,13 @@ public class CrdCreditCardController {
 
     private final CrdCreditCardService crdCreditCardService;
 
-    /**
-     * findAll
-     * findById
-     * delete(maybe passive) (cancel)
-     */
+    @PostMapping
+    public ResponseEntity save(@RequestBody CrdCreditCardSaveRequestDto crdCreditCardSaveRequestDto){
+
+        CrdCreditCardResponseDto crdCreditCardResponseDto = crdCreditCardService.saveCreditCard(crdCreditCardSaveRequestDto);
+
+        return ResponseEntity.ok(RestResponse.of(crdCreditCardResponseDto));
+    }
 
     @GetMapping
     public ResponseEntity findAll(){
@@ -37,10 +39,10 @@ public class CrdCreditCardController {
         return ResponseEntity.ok(RestResponse.of(crdCreditCardResponseDtoList));
     }
 
-    @PostMapping
-    public ResponseEntity save(@RequestBody CrdCreditCardSaveRequestDto crdCreditCardSaveRequestDto){
+    @GetMapping("/{id}")
+    public ResponseEntity findById(@PathVariable Long id){
 
-        CrdCreditCardResponseDto crdCreditCardResponseDto = crdCreditCardService.saveCreditCard(crdCreditCardSaveRequestDto);
+        CrdCreditCardResponseDto crdCreditCardResponseDto = crdCreditCardService.findById(id);
 
         return ResponseEntity.ok(RestResponse.of(crdCreditCardResponseDto));
     }

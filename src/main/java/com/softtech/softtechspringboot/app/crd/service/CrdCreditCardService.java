@@ -52,6 +52,15 @@ public class CrdCreditCardService {
         return result;
     }
 
+    public CrdCreditCardResponseDto findById(Long id) {
+
+        CrdCreditCard crdCreditCard = crdCreditCardEntityService.getByIdWithControl(id);
+
+        CrdCreditCardResponseDto result = CrdCreditCardMapper.INSTANCE.convertToCrdCreditCardResponseDto(crdCreditCard);
+
+        return result;
+    }
+
     private CrdCreditCardResponseDto createCardAndConvertToCrdCreditCardResponseDto(Long cusCustomerId, BigDecimal limit, Date cutoffDate, Date dueDate) {
 
         CrdCreditCard crdCreditCard = createCrdCreditCard(cusCustomerId, limit, cutoffDate, dueDate);
