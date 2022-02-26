@@ -236,4 +236,44 @@ public class CrdCreditCardService {
         crdCreditCardActivity = crdCreditCardActivityEntityService.save(crdCreditCardActivity);
         return crdCreditCardActivity;
     }
+
+    public CrdCreditCardActivityDto refund(Long activityId) {
+
+        CrdCreditCardActivity oldCrdCreditCardActivity = crdCreditCardActivityEntityService.getByIdWithControl(activityId);
+        BigDecimal amount = oldCrdCreditCardActivity.getAmount();
+
+        CrdCreditCard crdCreditCard = updateCreditCardForRefund(oldCrdCreditCardActivity, amount);
+
+        CrdCreditCardActivity crdCreditCardActivity = createCrdCreditCardActivityForRefund(oldCrdCreditCardActivity, amount, crdCreditCard);
+
+        CrdCreditCardActivityDto result = CrdCreditCardActivityMapper.INSTANCE.convertToCrdCreditCardActivityDto(crdCreditCardActivity);
+
+        return result;
+    }
+
+    private CrdCreditCardActivity createCrdCreditCardActivityForRefund(CrdCreditCardActivity oldCrdCreditCardActivity, BigDecimal amount, CrdCreditCard crdCreditCard) {
+        String description = "REFUND -> " + oldCrdCreditCardActivity.getDescription();
+
+        CrdCreditCardActivity crdCreditCardActivity = new CrdCreditCardActivity();
+        crdCreditCardActivity.setCrdCreditCardId(crdCreditCard.getId());
+        crdCreditCardActivity.setAmount(amount);
+        crdCreditCardActivity.setDescription(description);
+        crdCreditCardActivity.setCardActivityType(CrdCreditCardActivityType.REFUND);
+        crdCreditCardActivity.setTransactionDate(new Date());
+
+        crdCreditCardActivity = crdCreditCardActivityEntityService.save(crdCreditCardActivity);
+        return crdCreditCardActivity;
+    }
+
+    private CrdCreditCard updateCreditCardForRefund(CrdCreditCardActivity oldCrdCreditCardActivity, BigDecimal amount) {
+        CrdCreditCard crdCreditCard = crdCreditCardEntityService.getByIdWithControl(oldCrdCreditCardActivity.getCrdCreditCardId());
+
+        BigDecimal currentDebt = crdCreditCard.getCurrentDebt().subtract(amount);
+        BigDecimal currentAvailableLimit = crdCreditCard.getAvailableCardLimit().add(amount);
+
+        crdCreditCard.setCurrentDebt(currentDebt);
+        crdCreditCard.setAvailableCardLimit(currentAvailableLimit);
+        crdCreditCard = crdCreditCardEntityService.save(crdCreditCard);
+        return crdCreditCard;
+    }
 }
