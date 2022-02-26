@@ -1,6 +1,7 @@
 package com.softtech.softtechspringboot.app.crd.entity;
 
 import com.softtech.softtechspringboot.app.gen.entity.BaseEntity;
+import com.softtech.softtechspringboot.app.gen.enums.GenStatusType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -56,4 +57,12 @@ public class CrdCreditCard extends BaseEntity {
     @Column(name = "DUE_DATE", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dueDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS_TYPE", length = 30)
+    private GenStatusType statusType;
+
+    @Column(name = "CANCEL_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date cancelDate;
 }

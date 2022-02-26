@@ -46,4 +46,12 @@ public class CrdCreditCardController {
 
         return ResponseEntity.ok(RestResponse.of(crdCreditCardResponseDto));
     }
+
+    @PatchMapping("/cancel/{cardId}")
+    public ResponseEntity cancel(@PathVariable Long cardId){
+
+        crdCreditCardService.cancel(cardId);
+
+        return ResponseEntity.ok(RestResponse.empty());
+    }
 }
