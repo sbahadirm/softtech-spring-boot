@@ -25,7 +25,7 @@ public class AccAccountService {
 
     public List<AccAccountDto> findAll() {
 
-        List<AccAccount> accAccountList = accAccountEntityService.findAll();
+        List<AccAccount> accAccountList = accAccountEntityService.findAllActiveAccAccountList();
 
         List<AccAccountDto> accAccountDtoList = AccAccountMapper.INSTANCE.convertToAccAccountDtoList(accAccountList);
 
