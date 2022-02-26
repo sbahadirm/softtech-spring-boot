@@ -1,9 +1,6 @@
 package com.softtech.softtechspringboot.app.crd.controller;
 
-import com.softtech.softtechspringboot.app.crd.dto.CrdCreditCardActivityDto;
-import com.softtech.softtechspringboot.app.crd.dto.CrdCreditCardResponseDto;
-import com.softtech.softtechspringboot.app.crd.dto.CrdCreditCardSaveRequestDto;
-import com.softtech.softtechspringboot.app.crd.dto.CrdCreditCardSpendDto;
+import com.softtech.softtechspringboot.app.crd.dto.*;
 import com.softtech.softtechspringboot.app.crd.service.CrdCreditCardService;
 import com.softtech.softtechspringboot.app.gen.dto.RestResponse;
 import lombok.RequiredArgsConstructor;
@@ -76,6 +73,14 @@ public class CrdCreditCardController {
     public ResponseEntity refund(@PathVariable Long activityId){
 
         CrdCreditCardActivityDto crdCreditCardActivityDto = crdCreditCardService.refund(activityId);
+
+        return ResponseEntity.ok(RestResponse.of(crdCreditCardActivityDto));
+    }
+
+    @PostMapping("/payment")
+    public ResponseEntity payment(@RequestBody CrdCreditCardPaymentDto crdCreditCardPaymentDto){
+
+        CrdCreditCardActivityDto crdCreditCardActivityDto = crdCreditCardService.payment(crdCreditCardPaymentDto);
 
         return ResponseEntity.ok(RestResponse.of(crdCreditCardActivityDto));
     }
