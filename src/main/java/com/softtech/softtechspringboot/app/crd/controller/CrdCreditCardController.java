@@ -4,9 +4,11 @@ import com.softtech.softtechspringboot.app.crd.dto.*;
 import com.softtech.softtechspringboot.app.crd.service.CrdCreditCardService;
 import com.softtech.softtechspringboot.app.gen.dto.RestResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -84,4 +86,17 @@ public class CrdCreditCardController {
 
         return ResponseEntity.ok(RestResponse.of(crdCreditCardActivityDto));
     }
+
+    @GetMapping("/{id}/activities")
+    public ResponseEntity findAllActivities(
+            @PathVariable Long id,
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate
+    ){
+
+        List<CrdCreditCardActivityDto> crdCreditCardActivityDtoList = crdCreditCardService.findAllActivities(id, startDate, endDate);
+
+        return ResponseEntity.ok(RestResponse.of(crdCreditCardActivityDtoList));
+    }
+
 }
