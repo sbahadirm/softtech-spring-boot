@@ -6,6 +6,7 @@ import com.softtech.softtechspringboot.app.gen.enums.GenStatusType;
 import com.softtech.softtechspringboot.app.gen.service.BaseEntityService;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,5 +26,9 @@ public class CrdCreditCardEntityService extends BaseEntityService<CrdCreditCard,
 
     public List<CrdCreditCard> findAllActiveCreditCardList(){
         return getDao().findAllByStatusType(GenStatusType.ACTIVE);
+    }
+
+    public CrdCreditCard findByCardNoAndCvvNoAndExpireDate(Long cardNo, Long cvvNo, Date expireDate){
+        return getDao().findByCardNoAndCvvNoAndExpireDateAndStatusType(cardNo, cvvNo, expireDate, GenStatusType.ACTIVE);
     }
 }
