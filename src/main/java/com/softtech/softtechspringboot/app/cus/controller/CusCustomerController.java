@@ -46,13 +46,18 @@ public class CusCustomerController {
 
         CusCustomerDto cusCustomerDto = cusCustomerService.save(cusCustomerSaveRequestDto);
 
-        WebMvcLinkBuilder link = WebMvcLinkBuilder.linkTo(
+        WebMvcLinkBuilder linkGet = WebMvcLinkBuilder.linkTo(
                 WebMvcLinkBuilder.methodOn(
                         this.getClass()).findById(cusCustomerDto.getId()));
 
+        WebMvcLinkBuilder linkDelete = WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(
+                        this.getClass()).delete(cusCustomerDto.getId()));
+
         EntityModel entityModel = EntityModel.of(cusCustomerDto);
 
-        entityModel.add(link.withRel("find-by-id"));
+        entityModel.add(linkGet.withRel("find-by-id"));
+        entityModel.add(linkDelete.withRel("delete"));
 
         MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(entityModel);
 
