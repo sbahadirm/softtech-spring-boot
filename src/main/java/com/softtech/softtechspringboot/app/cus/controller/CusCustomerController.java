@@ -6,7 +6,10 @@ import com.softtech.softtechspringboot.app.cus.dto.CusCustomerUpdateRequestDto;
 import com.softtech.softtechspringboot.app.cus.service.CusCustomerService;
 import com.softtech.softtechspringboot.app.gen.dto.RestResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,7 +46,17 @@ public class CusCustomerController {
 
         CusCustomerDto cusCustomerDto = cusCustomerService.save(cusCustomerSaveRequestDto);
 
-        return ResponseEntity.ok(RestResponse.of(cusCustomerDto));
+        WebMvcLinkBuilder link = WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(
+                        this.getClass()).findById(cusCustomerDto.getId()));
+
+        EntityModel entityModel = EntityModel.of(cusCustomerDto);
+
+        entityModel.add(link.withRel("find-by-id"));
+
+        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(entityModel);
+
+        return ResponseEntity.ok(RestResponse.of(mappingJacksonValue));
     }
 
     @DeleteMapping("/{id}")
