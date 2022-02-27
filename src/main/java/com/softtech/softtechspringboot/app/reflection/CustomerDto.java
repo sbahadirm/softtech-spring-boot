@@ -4,13 +4,13 @@ package com.softtech.softtechspringboot.app.reflection;
  * @author Bahadır Memiş
  * @since 1.0.0
  */
-class CustomerDto {
+public final class CustomerDto {
 
  public Long id;
  private String surname;
  private String name;
 
- public CustomerDto(String surname, String name) {
+ private CustomerDto(String surname, String name) {
   this.surname = surname;
   this.name = name;
  }
