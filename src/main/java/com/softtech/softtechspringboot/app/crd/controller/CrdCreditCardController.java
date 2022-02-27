@@ -99,4 +99,11 @@ public class CrdCreditCardController {
         return ResponseEntity.ok(RestResponse.of(crdCreditCardActivityDtoList));
     }
 
+    @GetMapping("/{id}/statements")
+    public ResponseEntity statement(@PathVariable Long id){
+
+        CrdCreditCardDetails creditCardStatementDto = crdCreditCardService.statement(id);
+
+        return ResponseEntity.ok(RestResponse.of(creditCardStatementDto));
+    }
 }

@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -13,6 +14,13 @@ import java.util.Date;
  * @since 1.0.0
  */
 public class DateUtil {
+
+    public static LocalDate convertToLocalDate(Date dateToConvert) {
+
+        LocalDate localDate = Instant.ofEpochMilli(dateToConvert.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+
+        return localDate;
+    }
 
     public static LocalDateTime convertToLocalDateTime(Date dateToConvert) {
         return dateToConvert.toInstant()

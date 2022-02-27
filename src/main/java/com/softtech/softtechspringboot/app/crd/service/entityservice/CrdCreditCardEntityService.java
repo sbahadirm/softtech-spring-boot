@@ -1,6 +1,7 @@
 package com.softtech.softtechspringboot.app.crd.service.entityservice;
 
 import com.softtech.softtechspringboot.app.crd.dao.CrdCreditCardDao;
+import com.softtech.softtechspringboot.app.crd.dto.CrdCreditCardDetails;
 import com.softtech.softtechspringboot.app.crd.entity.CrdCreditCard;
 import com.softtech.softtechspringboot.app.gen.enums.GenStatusType;
 import com.softtech.softtechspringboot.app.gen.service.BaseEntityService;
@@ -30,5 +31,9 @@ public class CrdCreditCardEntityService extends BaseEntityService<CrdCreditCard,
 
     public CrdCreditCard findByCardNoAndCvvNoAndExpireDate(Long cardNo, Long cvvNo, Date expireDate){
         return getDao().findByCardNoAndCvvNoAndExpireDateAndStatusType(cardNo, cvvNo, expireDate, GenStatusType.ACTIVE);
+    }
+
+    public CrdCreditCardDetails getCreditCardDetails(Long creditCardId){
+        return getDao().getCreditCardDetails(creditCardId);
     }
 }

@@ -317,4 +317,28 @@ public class CrdCreditCardService {
 
         return result;
     }
+
+    public CrdCreditCardDetails statement(Long id) {
+
+        CrdCreditCard crdCreditCard = crdCreditCardEntityService.getByIdWithControl(id);
+        Date termEndDate = crdCreditCard.getCutoffDate();
+        Long crdCreditCardId = crdCreditCard.getId();
+
+        LocalDate cutoffDateLocal = DateUtil.convertToLocalDate(termEndDate);
+
+        LocalDate termStartDateLocal = cutoffDateLocal.minusMonths(1);
+        Date termStartDate = DateUtil.convertToDate(termStartDateLocal);
+
+        CrdCreditCardDetails creditCardDetails = crdCreditCardEntityService.getCreditCardDetails(crdCreditCardId);
+
+        List<CrdCreditCardActivity> crdCreditCardActivityList = crdCreditCardActivityEntityService
+                .findAllByCrdCreditCardIdAndTransactionDateBetween(crdCreditCardId, termStartDate, termEndDate);
+
+        List<CrdCreditCardActivityDto> crdCreditCardActivityDtoList = CrdCreditCardActivityMapper.INSTANCE
+                .convertToCrdCreditCardActivityDtoList(crdCreditCardActivityList);
+
+        creditCardDetails.setCrdCreditCardActivityDtoList(crdCreditCardActivityDtoList);
+
+        return creditCardDetails;
+    }
 }
