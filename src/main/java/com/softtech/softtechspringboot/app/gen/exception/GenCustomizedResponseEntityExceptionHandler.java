@@ -42,7 +42,7 @@ public class GenCustomizedResponseEntityExceptionHandler extends ResponseEntityE
     public final ResponseEntity<Object> handleAllItemNotFoundException(ItemNotFoundException ex, WebRequest webRequest){
 
         Date errorDate = new Date();
-        String message = ex.getBaseErrorMessage().getMessage();
+        String message = ex.getMessage();
         String description = webRequest.getDescription(false);
 
         GenExceptionResponse genExceptionResponse = new GenExceptionResponse(errorDate, message, description);
@@ -57,7 +57,7 @@ public class GenCustomizedResponseEntityExceptionHandler extends ResponseEntityE
     public final ResponseEntity<Object> handleAllGenBusinessException(GenBusinessException ex, WebRequest webRequest){
 
         Date errorDate = new Date();
-        String message = ex.getBaseErrorMessage().getMessage();
+        String message = ex.getMessage();
         String description = webRequest.getDescription(false);
 
         GenExceptionResponse genExceptionResponse = new GenExceptionResponse(errorDate, message, description);

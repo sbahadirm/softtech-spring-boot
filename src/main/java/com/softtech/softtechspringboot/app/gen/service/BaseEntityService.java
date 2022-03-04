@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -66,11 +67,18 @@ public abstract class BaseEntityService<E extends BaseEntity, D extends JpaRepos
 
         Optional<E> entityOptional = findById(id);
 
+        String simpleName = "";
+        try {
+            simpleName = Class.forName(((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0].getTypeName()).getSimpleName();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         E entity;
         if (entityOptional.isPresent()){
             entity = entityOptional.get();
         } else {
-            throw new ItemNotFoundException(GenErrorMessage.ITEM_NOT_FOUND);
+            throw new ItemNotFoundException(GenErrorMessage.ITEM_NOT_FOUND, simpleName);
         }
 
         return entity;

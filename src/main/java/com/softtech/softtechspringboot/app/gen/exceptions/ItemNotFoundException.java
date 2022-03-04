@@ -14,4 +14,8 @@ public class ItemNotFoundException extends GenBusinessException{
     public ItemNotFoundException(BaseErrorMessage message) {
         super(message);
     }
+
+    public ItemNotFoundException(BaseErrorMessage baseErrorMessage, String message) {
+        super(baseErrorMessage, message);
+    }
 }
