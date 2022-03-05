@@ -38,4 +38,15 @@ public class TransactionalService {
 
         System.out.println("end");
     }
+
+    public void saveT2T(){
+
+        CusCustomer cusCustomer = TransactionalUtil.getDummyCusCustomer("ts5");
+
+        cusCustomerEntityService.save(cusCustomer);
+
+        save();
+
+        System.out.println("end");
+    }
 }
