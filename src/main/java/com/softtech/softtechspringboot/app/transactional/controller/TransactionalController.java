@@ -179,4 +179,11 @@ public class TransactionalController {
         transactionalService.doSomethingWithNewTransaction();
     }
 
+    /**
+     * 20: never - öncesinde transaction yok
+     */
+    @PostMapping("/ts20")
+    public void ts20(){
+        nonTransactionalService.saveNon2Never();
+    }
 }
