@@ -138,6 +138,14 @@ public class TransactionalController {
     }
 
     /**
+     * 15: not_suppoted (hızlı)
+     */
+    @PostMapping("/ts15")
+    public void ts15(){
+        transactionalService.doSomething();
+    }
+
+    /**
      * 22: required ile toplu kayıtta hata aldırma.
      */
     @PostMapping("/ts22")

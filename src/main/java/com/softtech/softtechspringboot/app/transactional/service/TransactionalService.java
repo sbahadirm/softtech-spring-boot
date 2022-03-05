@@ -20,6 +20,7 @@ public class TransactionalService {
     private final CusCustomerEntityService cusCustomerEntityService;
     private final NonTransactionalService nonTransactionalService;
     private final TransactionalService2 transactionalService2;
+    private final TransactionalConstantService transactionalConstantService;
 
     public void save(){
 
@@ -182,5 +183,13 @@ public class TransactionalService {
         transactionalService2.saveSupports();
 
         System.out.println("end");
+    }
+
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public void doSomething(){
+
+        for (int i = 0; i < 9999; i++){
+            CusCustomer cusCustomer = transactionalConstantService.findById(1L);
+        }
     }
 }
