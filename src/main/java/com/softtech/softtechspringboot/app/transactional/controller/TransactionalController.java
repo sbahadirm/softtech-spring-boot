@@ -88,4 +88,12 @@ public class TransactionalController {
     public void ts8(){
         transactionalService.saveT2RN();
     }
+
+    /**
+     * 9: requires new i farklı classa taşıma.
+     */
+    @PostMapping("/ts9")
+    public void ts9(){
+        transactionalService.saveT2RNWithDifferentBean();
+    }
 }
