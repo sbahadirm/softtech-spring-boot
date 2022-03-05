@@ -145,6 +145,15 @@ public class TransactionalController {
         transactionalService.doSomething();
     }
 
+
+    /**
+     * 16: nested (desteklenmez)
+     */
+    @PostMapping("/ts16")
+    public void ts16(){
+        transactionalService.saveNested();
+    }
+
     /**
      * 22: required ile toplu kayıtta hata aldırma.
      */
