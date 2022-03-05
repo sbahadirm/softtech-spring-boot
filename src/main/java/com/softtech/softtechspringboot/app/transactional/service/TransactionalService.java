@@ -161,4 +161,15 @@ public class TransactionalService {
 
         System.out.println("end");
     }
+
+    public void saveT2M(){
+
+        CusCustomer cusCustomer = TransactionalUtil.getDummyCusCustomer("ts12-T");
+
+        cusCustomerEntityService.save(cusCustomer);
+
+        transactionalService2.saveMandatory();
+
+        System.out.println("end");
+    }
 }

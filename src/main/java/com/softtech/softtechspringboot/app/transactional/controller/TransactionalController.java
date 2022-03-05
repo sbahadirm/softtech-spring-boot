@@ -114,6 +114,14 @@ public class TransactionalController {
     }
 
     /**
+     * 12: mandatory transaction var
+     */
+    @PostMapping("/ts12")
+    public void ts12(){
+        transactionalService.saveT2M();
+    }
+
+    /**
      * 22: required ile toplu kayıtta hata aldırma.
      */
     @PostMapping("/ts22")
