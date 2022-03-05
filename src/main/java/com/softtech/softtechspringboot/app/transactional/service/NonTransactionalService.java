@@ -65,4 +65,15 @@ public class NonTransactionalService {
 //    private void testmethod() {
 //        throw new RuntimeException("error");
 //    }
+
+    public void saveMandatory(){
+
+        CusCustomer cusCustomer = TransactionalUtil.getDummyCusCustomer("ts11-N");
+
+        cusCustomerEntityService.save(cusCustomer);
+
+        transactionalService.saveMandatory();
+
+        System.out.println("end");
+    }
 }

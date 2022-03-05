@@ -106,6 +106,14 @@ public class TransactionalController {
     }
 
     /**
+     * 11: mandatory transaction yok
+     */
+    @PostMapping("/ts11")
+    public void ts11(){
+        nonTransactionalService.saveMandatory();
+    }
+
+    /**
      * 22: required ile toplu kayıtta hata aldırma.
      */
     @PostMapping("/ts22")

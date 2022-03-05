@@ -151,4 +151,14 @@ public class TransactionalService {
 
         System.out.println("end");
     }
+
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void saveMandatory(){
+
+        CusCustomer cusCustomer = TransactionalUtil.getDummyCusCustomer("ts11-T");
+
+        cusCustomerEntityService.save(cusCustomer);
+
+        System.out.println("end");
+    }
 }
