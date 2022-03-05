@@ -130,6 +130,14 @@ public class TransactionalController {
     }
 
     /**
+     * 14: supports transaction yok
+     */
+    @PostMapping("/ts14")
+    public void ts14(){
+        nonTransactionalService.saveN2S();
+    }
+
+    /**
      * 22: required ile toplu kayıtta hata aldırma.
      */
     @PostMapping("/ts22")
