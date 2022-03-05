@@ -199,4 +199,11 @@ public class TransactionalService {
 
         System.out.println("end");
     }
+
+    public void doSomethingWithNewTransaction(){
+
+        for (int i = 0; i < 9999; i++){
+            CusCustomer cusCustomer = transactionalConstantService.findByIdWithNewTransaction(1L);
+        }
+    }
 }

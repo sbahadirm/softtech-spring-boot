@@ -163,10 +163,20 @@ public class TransactionalController {
     }
 
     /**
-     * 22: required ile toplu kayıtta hata aldırma.
+     * 18: required ile toplu kayıtta hata aldırma.
      */
-    @PostMapping("/ts22")
-    public void ts22(){
+    @PostMapping("/ts18")
+    public void ts18(){
         transactionalService.saveT2TButError();
     }
+
+    /**
+     *
+     * 19: transaction açıp kapatma maliyeti
+     */
+    @PostMapping("/ts19")
+    public void ts19(){
+        transactionalService.doSomethingWithNewTransaction();
+    }
+
 }
