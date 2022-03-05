@@ -49,4 +49,23 @@ public class TransactionalService {
 
         System.out.println("end");
     }
+
+    public void saveButError(){
+
+        CusCustomer cusCustomer = TransactionalUtil.getDummyCusCustomer("ts6");
+
+        cusCustomerEntityService.save(cusCustomer);
+
+//        try {
+//            testmethod();
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
+
+        System.out.println("end");
+    }
+
+//    private void testmethod() {
+//        throw new RuntimeException("error");
+//    }
 }

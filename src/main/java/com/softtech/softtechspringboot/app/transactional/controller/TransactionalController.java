@@ -64,4 +64,12 @@ public class TransactionalController {
     public void ts5(){
         transactionalService.saveT2T();
     }
+
+    /**
+     * 6: sadece transactional olan bir yerde kayıt işlemi sırasında hata
+     */
+    @PostMapping("/ts6")
+    public void ts6(){
+        transactionalService.saveButError();
+    }
 }
