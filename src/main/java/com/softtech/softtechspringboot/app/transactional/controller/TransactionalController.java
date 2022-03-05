@@ -104,4 +104,12 @@ public class TransactionalController {
     public void ts10(){
         transactionalService.saveT2RNButError();
     }
+
+    /**
+     * 22: required ile toplu kayıtta hata aldırma.
+     */
+    @PostMapping("/ts22")
+    public void ts22(){
+        transactionalService.saveT2TButError();
+    }
 }

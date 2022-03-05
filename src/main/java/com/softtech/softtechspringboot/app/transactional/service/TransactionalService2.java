@@ -42,4 +42,18 @@ public class TransactionalService2 {
 
         System.out.println("end ->" + i);
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void save(int i){
+
+        CusCustomer cusCustomer = TransactionalUtil.getDummyCusCustomer("ts10-" + i);
+
+        cusCustomerEntityService.save(cusCustomer);
+
+        if (i == 7){
+            throw new RuntimeException("error");
+        }
+
+        System.out.println("end ->" + i);
+    }
 }
