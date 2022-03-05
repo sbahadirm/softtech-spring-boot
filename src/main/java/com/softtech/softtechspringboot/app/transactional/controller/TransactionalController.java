@@ -46,4 +46,15 @@ public class TransactionalController {
 
         System.out.println("end");
     }
+
+    /**
+     * 4: transactional olmayan yerden olan yere geçme
+     */
+    @PostMapping("/ts4")
+    public void ts4(){
+        nonTransactionalService.saveN2T();
+
+        System.out.println("end");
+
+    }
 }
