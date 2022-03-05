@@ -17,12 +17,24 @@ import org.springframework.transaction.annotation.Transactional;
 public class TransactionalService {
 
     private final CusCustomerEntityService cusCustomerEntityService;
+    private final NonTransactionalService nonTransactionalService;
 
     public void save(){
 
         CusCustomer cusCustomer = TransactionalUtil.getDummyCusCustomer("ts2");
 
         cusCustomerEntityService.save(cusCustomer);
+
+        System.out.println("end");
+    }
+
+    public void saveT2N(){
+
+        CusCustomer cusCustomer = TransactionalUtil.getDummyCusCustomer("ts3");
+
+        cusCustomerEntityService.save(cusCustomer);
+
+        nonTransactionalService.save();
 
         System.out.println("end");
     }
