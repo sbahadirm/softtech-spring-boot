@@ -96,4 +96,12 @@ public class TransactionalController {
     public void ts9(){
         transactionalService.saveT2RNWithDifferentBean();
     }
+
+    /**
+     * 10: requires new ile hata almayanları commitleme.
+     */
+    @PostMapping("/ts10")
+    public void ts10(){
+        transactionalService.saveT2RNButError();
+    }
 }
