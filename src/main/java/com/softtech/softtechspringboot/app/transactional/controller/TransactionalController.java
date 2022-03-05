@@ -110,7 +110,7 @@ public class TransactionalController {
      */
     @PostMapping("/ts11")
     public void ts11(){
-        nonTransactionalService.saveMandatory();
+        nonTransactionalService.saveN2M();
     }
 
     /**
