@@ -155,6 +155,14 @@ public class TransactionalController {
     }
 
     /**
+     * 17: toplu işlemlerinizi transactional olmayan yerde yapın.en hızlı senaryo
+     */
+    @PostMapping("/ts17")
+    public void ts17(){
+        nonTransactionalService.doSomething();
+    }
+
+    /**
      * 22: required ile toplu kayıtta hata aldırma.
      */
     @PostMapping("/ts22")
