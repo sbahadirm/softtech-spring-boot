@@ -72,4 +72,12 @@ public class TransactionalController {
     public void ts6(){
         transactionalService.saveButError();
     }
+
+    /**
+     * 7: non transactional olan bir yerde kayıt işlemi sırasında hata
+     */
+    @PostMapping("/ts7")
+    public void ts7(){
+        nonTransactionalService.saveButError();
+    }
 }

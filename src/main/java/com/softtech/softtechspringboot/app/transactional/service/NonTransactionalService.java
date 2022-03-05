@@ -43,4 +43,26 @@ public class NonTransactionalService {
 
         System.out.println("end");
     }
+
+    public void saveButError(){
+
+        CusCustomer cusCustomer = TransactionalUtil.getDummyCusCustomer("ts7");
+
+        cusCustomerEntityService.save(cusCustomer);
+
+        System.out.println("end");
+
+        throw new RuntimeException("error");
+
+//        try {
+//            testmethod();
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
+
+    }
+
+//    private void testmethod() {
+//        throw new RuntimeException("error");
+//    }
 }
