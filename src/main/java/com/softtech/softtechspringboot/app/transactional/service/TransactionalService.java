@@ -21,6 +21,7 @@ public class TransactionalService {
     private final NonTransactionalService nonTransactionalService;
     private final TransactionalService2 transactionalService2;
     private final TransactionalConstantService transactionalConstantService;
+    private final NonTransactionalConstantService nonTransactionalConstantService;
 
     public void save(){
 
@@ -205,5 +206,16 @@ public class TransactionalService {
         for (int i = 0; i < 9999; i++){
             CusCustomer cusCustomer = transactionalConstantService.findByIdWithNewTransaction(1L);
         }
+    }
+
+    public void saveT2Never() {
+
+        CusCustomer cusCustomer = TransactionalUtil.getDummyCusCustomer("ts21-Non");
+
+        cusCustomerEntityService.save(cusCustomer);
+
+        nonTransactionalConstantService.saveNever();
+
+        System.out.println("end");
     }
 }
