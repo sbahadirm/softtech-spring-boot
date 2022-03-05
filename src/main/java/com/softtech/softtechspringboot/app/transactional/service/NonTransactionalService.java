@@ -2,6 +2,7 @@ package com.softtech.softtechspringboot.app.transactional.service;
 
 import com.softtech.softtechspringboot.app.cus.entity.CusCustomer;
 import com.softtech.softtechspringboot.app.cus.service.entityservice.CusCustomerEntityService;
+import com.softtech.softtechspringboot.app.transactional.util.TransactionalUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +18,11 @@ public class NonTransactionalService {
 
     public void save(){
 
-        CusCustomer cusCustomer = new CusCustomer();
-        cusCustomer.setName("test");
-        cusCustomer.setSurname("test");
-        cusCustomer.setIdentityNo(12312312312L);
-        cusCustomer.setPassword("123");
+        CusCustomer cusCustomer = TransactionalUtil.getDummyCusCustomer("ts1");
 
         cusCustomerEntityService.save(cusCustomer);
 
         System.out.println("end");
     }
+
 }
