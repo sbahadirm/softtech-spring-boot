@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 public class AccAccountSaveRequestDto {
 
     private Long cusCustomerId;
-    private String ibanNo;
     private BigDecimal currentBalance;
     private AccCurrencyType currencyType;
     private AccAccountType accountType;

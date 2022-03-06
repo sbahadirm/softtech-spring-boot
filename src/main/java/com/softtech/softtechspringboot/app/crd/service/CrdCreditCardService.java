@@ -12,6 +12,7 @@ import com.softtech.softtechspringboot.app.crd.service.entityservice.CrdCreditCa
 import com.softtech.softtechspringboot.app.gen.enums.GenStatusType;
 import com.softtech.softtechspringboot.app.gen.exceptions.GenBusinessException;
 import com.softtech.softtechspringboot.app.gen.util.DateUtil;
+import com.softtech.softtechspringboot.app.gen.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
@@ -146,12 +147,12 @@ public class CrdCreditCardService {
     }
 
     private Long getCvvNo() {
-        Long cvvNo = getRandomNumber(3);
+        Long cvvNo = StringUtil.getRandomNumber(3);
         return cvvNo;
     }
 
     private Long getCardNo() {
-        Long cardNo = getRandomNumber(16);
+        Long cardNo = StringUtil.getRandomNumber(16);
         return cardNo;
     }
 
@@ -341,10 +342,4 @@ public class CrdCreditCardService {
         return creditCardDetails;
     }
 
-    public Long getRandomNumber(int charCount){
-
-        String randomNumeric = RandomStringUtils.randomNumeric(charCount);
-
-        return Long.parseLong(randomNumeric);
-    }
 }

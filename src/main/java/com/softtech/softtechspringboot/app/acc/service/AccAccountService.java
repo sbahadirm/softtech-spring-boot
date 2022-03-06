@@ -6,6 +6,7 @@ import com.softtech.softtechspringboot.app.acc.dto.AccAccountSaveRequestDto;
 import com.softtech.softtechspringboot.app.acc.entity.AccAccount;
 import com.softtech.softtechspringboot.app.acc.service.entityservice.AccAccountEntityService;
 import com.softtech.softtechspringboot.app.gen.enums.GenStatusType;
+import com.softtech.softtechspringboot.app.gen.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -43,8 +44,11 @@ public class AccAccountService {
 
     public AccAccountDto save(AccAccountSaveRequestDto accAccountSaveRequestDto) {
 
+        String ibanNo = getIbanNo();
+
         AccAccount accAccount = AccAccountMapper.INSTANCE.convertToAccAccount(accAccountSaveRequestDto);
         accAccount.setStatusType(GenStatusType.ACTIVE);
+        accAccount.setIbanNo(ibanNo);
 
         accAccount = accAccountEntityService.save(accAccount);
 
@@ -60,5 +64,10 @@ public class AccAccountService {
         accAccount.setCancelDate(new Date());
 
         accAccountEntityService.save(accAccount);
+    }
+
+    private String getIbanNo() {
+        String ibanNo = StringUtil.getRandomNumberAsString(26);
+        return ibanNo;
     }
 }
