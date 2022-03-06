@@ -6,6 +6,7 @@ import com.softtech.softtechspringboot.app.crd.entity.CrdCreditCard;
 import com.softtech.softtechspringboot.app.gen.enums.GenStatusType;
 import com.softtech.softtechspringboot.app.gen.service.BaseEntityService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Service
+@Transactional
 public class CrdCreditCardEntityService extends BaseEntityService<CrdCreditCard, CrdCreditCardDao> {
 
     public CrdCreditCardEntityService(CrdCreditCardDao dao) {

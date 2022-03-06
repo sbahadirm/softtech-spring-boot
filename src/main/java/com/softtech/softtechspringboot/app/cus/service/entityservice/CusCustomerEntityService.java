@@ -4,6 +4,7 @@ import com.softtech.softtechspringboot.app.cus.dao.CusCustomerDao;
 import com.softtech.softtechspringboot.app.cus.entity.CusCustomer;
 import com.softtech.softtechspringboot.app.gen.service.BaseEntityService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Service
+@Transactional
 public class CusCustomerEntityService extends BaseEntityService<CusCustomer, CusCustomerDao> {
 
     public CusCustomerEntityService(CusCustomerDao dao) {

@@ -8,6 +8,7 @@ import com.softtech.softtechspringboot.app.acc.enums.AccAccountActivityType;
 import com.softtech.softtechspringboot.app.acc.service.entityservice.AccMoneyTransferEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -18,6 +19,7 @@ import java.util.Date;
  */
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AccMoneyTransferService {
 
     private final AccMoneyTransferEntityService accMoneyTransferEntityService;

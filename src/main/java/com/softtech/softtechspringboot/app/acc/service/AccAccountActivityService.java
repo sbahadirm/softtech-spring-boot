@@ -12,6 +12,7 @@ import com.softtech.softtechspringboot.app.acc.service.entityservice.AccAccountE
 import com.softtech.softtechspringboot.app.gen.exceptions.GenBusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -22,6 +23,7 @@ import java.util.Date;
  */
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AccAccountActivityService {
 
     private final AccAccountEntityService accAccountEntityService;

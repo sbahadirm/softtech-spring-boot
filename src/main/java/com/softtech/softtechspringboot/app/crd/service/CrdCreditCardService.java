@@ -16,6 +16,7 @@ import com.softtech.softtechspringboot.app.gen.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
@@ -30,6 +31,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CrdCreditCardService {
 
     private final CrdCreditCardEntityService crdCreditCardEntityService;
