@@ -15,4 +15,6 @@ public interface CusCustomerDao extends JpaRepository<CusCustomer, Long> {
 
     List<CusCustomer> findAllBySurname(String surname);
 
+    CusCustomer findByIdentityNo(Long identityNo);
+
 }
