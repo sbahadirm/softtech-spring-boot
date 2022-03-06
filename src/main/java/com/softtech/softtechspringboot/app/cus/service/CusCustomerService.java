@@ -10,6 +10,7 @@ import com.softtech.softtechspringboot.app.cus.enums.CusErrorMessage;
 import com.softtech.softtechspringboot.app.cus.service.entityservice.CusCustomerEntityService;
 import com.softtech.softtechspringboot.app.gen.exceptions.ItemNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class CusCustomerService {
 
     private final CusCustomerEntityService cusCustomerEntityService;
     private final CusCustomerConverter cusCustomerConverter;
+    private final PasswordEncoder passwordEncoder;
 
     public List<CusCustomerDto> findAll() {
 
@@ -37,6 +39,9 @@ public class CusCustomerService {
     public CusCustomerDto save(CusCustomerSaveRequestDto cusCustomerSaveRequestDto) {
 
         CusCustomer cusCustomer = CusCustomerMapper.INSTANCE.convertToCusCustomer(cusCustomerSaveRequestDto);
+
+        String password = passwordEncoder.encode(cusCustomer.getPassword());
+        cusCustomer.setPassword(password);
 
         cusCustomer = cusCustomerEntityService.save(cusCustomer);
 

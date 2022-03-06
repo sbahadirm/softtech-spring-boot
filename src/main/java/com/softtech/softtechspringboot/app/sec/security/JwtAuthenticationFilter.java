@@ -1,5 +1,6 @@
 package com.softtech.softtechspringboot.app.sec.security;
 
+import com.softtech.softtechspringboot.app.sec.enums.EnumJwtConstant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -61,7 +62,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = null;
         if (StringUtils.hasText(fullToken)){
-            String bearer = "Bearer ";
+            String bearer = EnumJwtConstant.BEARER.getConstant();
 
             if (fullToken.startsWith(bearer)){
                 token = fullToken.substring(bearer.length());
