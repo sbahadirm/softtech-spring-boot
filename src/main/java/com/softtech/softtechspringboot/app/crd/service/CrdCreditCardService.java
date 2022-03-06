@@ -13,6 +13,7 @@ import com.softtech.softtechspringboot.app.gen.enums.GenStatusType;
 import com.softtech.softtechspringboot.app.gen.exceptions.GenBusinessException;
 import com.softtech.softtechspringboot.app.gen.util.DateUtil;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -144,15 +145,13 @@ public class CrdCreditCardService {
         return cutoffDay;
     }
 
-    //TODO: implement
     private Long getCvvNo() {
-        Long cvvNo = 123L;
+        Long cvvNo = getRandomNumber(3);
         return cvvNo;
     }
 
-    //TODO: implement
     private Long getCardNo() {
-        Long cardNo = 1234567890123456L;
+        Long cardNo = getRandomNumber(16);
         return cardNo;
     }
 
@@ -340,5 +339,12 @@ public class CrdCreditCardService {
         creditCardDetails.setCrdCreditCardActivityDtoList(crdCreditCardActivityDtoList);
 
         return creditCardDetails;
+    }
+
+    public Long getRandomNumber(int charCount){
+
+        String randomNumeric = RandomStringUtils.randomNumeric(charCount);
+
+        return Long.parseLong(randomNumeric);
     }
 }
