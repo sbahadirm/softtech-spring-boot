@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 @Data
 public class AccAccountSaveRequestDto {
 
-    private Long cusCustomerId;
     private BigDecimal currentBalance;
     private AccCurrencyType currencyType;
     private AccAccountType accountType;

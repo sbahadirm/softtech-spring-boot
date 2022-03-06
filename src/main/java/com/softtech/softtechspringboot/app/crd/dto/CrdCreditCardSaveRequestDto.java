@@ -13,9 +13,6 @@ import java.math.BigDecimal;
 public class CrdCreditCardSaveRequestDto {
 
     @NotNull
-    private Long cusCustomerId;
-
-    @NotNull
     private BigDecimal earning;
 
     private String cutoffDay;

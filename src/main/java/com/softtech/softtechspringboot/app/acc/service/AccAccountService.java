@@ -46,9 +46,12 @@ public class AccAccountService {
 
         String ibanNo = getIbanNo();
 
+        Long currentCustomerId = accAccountEntityService.getCurrentCustomerId();
+
         AccAccount accAccount = AccAccountMapper.INSTANCE.convertToAccAccount(accAccountSaveRequestDto);
         accAccount.setStatusType(GenStatusType.ACTIVE);
         accAccount.setIbanNo(ibanNo);
+        accAccount.setCusCustomerId(currentCustomerId);
 
         accAccount = accAccountEntityService.save(accAccount);
 

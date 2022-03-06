@@ -37,7 +37,6 @@ public class CrdCreditCardService {
 
     public CrdCreditCardResponseDto saveCreditCard(CrdCreditCardSaveRequestDto crdCreditCardSaveRequestDto) {
 
-        Long cusCustomerId = crdCreditCardSaveRequestDto.getCusCustomerId();
         BigDecimal earning = crdCreditCardSaveRequestDto.getEarning();
         String cutoffDayStr = crdCreditCardSaveRequestDto.getCutoffDay();
 
@@ -47,7 +46,7 @@ public class CrdCreditCardService {
 
         Date dueDate = getDueDate(cutoffDateLocal);
 
-        CrdCreditCardResponseDto crdCreditCardResponseDto = createCardAndConvertToCrdCreditCardResponseDto(cusCustomerId, limit, cutoffDate, dueDate);
+        CrdCreditCardResponseDto crdCreditCardResponseDto = createCardAndConvertToCrdCreditCardResponseDto(limit, cutoffDate, dueDate);
 
         return crdCreditCardResponseDto;
     }
@@ -70,9 +69,11 @@ public class CrdCreditCardService {
         return result;
     }
 
-    private CrdCreditCardResponseDto createCardAndConvertToCrdCreditCardResponseDto(Long cusCustomerId, BigDecimal limit, Date cutoffDate, Date dueDate) {
+    private CrdCreditCardResponseDto createCardAndConvertToCrdCreditCardResponseDto(BigDecimal limit, Date cutoffDate, Date dueDate) {
 
-        CrdCreditCard crdCreditCard = createCrdCreditCard(cusCustomerId, limit, cutoffDate, dueDate);
+        Long currentCustomerId = crdCreditCardActivityEntityService.getCurrentCustomerId();
+        CrdCreditCard crdCreditCard = createCrdCreditCard(currentCustomerId, limit, cutoffDate, dueDate);
+        crdCreditCard.setCusCustomerId(currentCustomerId);
 
         CrdCreditCardResponseDto crdCreditCardResponseDto = CrdCreditCardMapper.INSTANCE.convertToCrdCreditCardResponseDto(crdCreditCard);
 
