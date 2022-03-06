@@ -5,13 +5,12 @@ import com.softtech.softtechspringboot.app.transactional.service.TransactionalSe
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Bahadır Memiş
  * @since 1.0.0
  */
-@RestController
+//@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/transactional")
 public class TransactionalController {

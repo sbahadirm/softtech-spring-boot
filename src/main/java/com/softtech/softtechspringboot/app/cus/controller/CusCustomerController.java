@@ -5,6 +5,10 @@ import com.softtech.softtechspringboot.app.cus.dto.CusCustomerSaveRequestDto;
 import com.softtech.softtechspringboot.app.cus.dto.CusCustomerUpdateRequestDto;
 import com.softtech.softtechspringboot.app.cus.service.CusCustomerService;
 import com.softtech.softtechspringboot.app.gen.dto.RestResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -25,6 +29,7 @@ public class CusCustomerController {
 
     private final CusCustomerService cusCustomerService;
 
+    @Operation(tags = "Customer Controller", description = "Gets all customer.", summary = "All customer")
     @GetMapping
     public ResponseEntity findAll(){
 
@@ -33,6 +38,7 @@ public class CusCustomerController {
         return ResponseEntity.ok(RestResponse.of(cusCustomerDtoList));
     }
 
+    @Operation(tags = "Customer Controller")
     @GetMapping("/{id}")
     public ResponseEntity findById(@PathVariable Long id){
 
@@ -41,6 +47,46 @@ public class CusCustomerController {
         return ResponseEntity.ok(RestResponse.of(cusCustomerDto));
     }
 
+    @Operation(
+            tags = "Customer Controller",
+            description = "Creates new customer",
+            summary = "creates new customer",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Customers",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(
+                                            implementation = CusCustomerSaveRequestDto.class
+                                    ),
+                                    examples = {
+                                            @ExampleObject(
+                                                    name = "new foreign customer",
+                                                    summary = "New Foreign Customer Example",
+                                                    description = "Complete request with all available fields for foreign customer",
+                                                    value = "{\n" +
+                                                            "  \"name\": \"john\",\n" +
+                                                            "  \"surname\": \"smith\",\n" +
+                                                            "  \"identityNo\": 92345678901,\n" +
+                                                            "  \"password\": \"J.s_1234\"\n" +
+                                                            "}"
+                                            ),
+                                            @ExampleObject(
+                                                    name = "new customer",
+                                                    summary = "New Customer Example",
+                                                    description = "Complete request with all available fields",
+                                                    value = "{\n" +
+                                                            "  \"name\": \"ali\",\n" +
+                                                            "  \"surname\": \"veli\",\n" +
+                                                            "  \"identityNo\": 12345678901,\n" +
+                                                            "  \"password\": \"A.v_1234\"\n" +
+                                                            "}"
+                                            )
+                                    }
+                            ),
+                    }
+            )
+    )
     @PostMapping
     public ResponseEntity save(@RequestBody CusCustomerSaveRequestDto cusCustomerSaveRequestDto){
 
@@ -64,6 +110,7 @@ public class CusCustomerController {
         return ResponseEntity.ok(RestResponse.of(mappingJacksonValue));
     }
 
+    @Operation(tags = "Customer Controller")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id){
 
@@ -72,6 +119,7 @@ public class CusCustomerController {
         return ResponseEntity.ok(RestResponse.empty());
     }
 
+    @Operation(tags = "Customer Controller")
     @PutMapping
     public ResponseEntity update(@RequestBody CusCustomerUpdateRequestDto cusCustomerUpdateRequestDto){
 
