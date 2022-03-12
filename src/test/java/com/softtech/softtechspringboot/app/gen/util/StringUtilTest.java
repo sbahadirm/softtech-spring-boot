@@ -72,6 +72,13 @@ class StringUtilTest {
     }
 
     @Test
-    void getRandomString() {
+    void shouldGetRandomString() {
+
+        int charCount = 5;
+
+        String randomString = StringUtil.getRandomString(5);
+
+        assertEquals(charCount, randomString.length());
+
     }
 }
