@@ -13,7 +13,10 @@ public class StringUtil {
 
     public static Long getRandomNumber(int charCount){
 
-        String randomNumeric = getRandomNumberAsString(charCount);
+        String randomNumeric;
+        do {
+            randomNumeric = getRandomNumberAsString(charCount);
+        } while (randomNumeric.startsWith("0"));
 
         Long randomLong = null;
         if (StringUtils.hasText(randomNumeric)){
