@@ -33,17 +33,6 @@ class StringUtilTest {
     }
 
     @Test
-    void shouldNotGetRandomNumberWhenCharCountIsNegative() {
-
-        int charCount = -1;
-
-        GenBusinessException genBusinessException = assertThrows(GenBusinessException.class, () -> StringUtil.getRandomNumber(charCount));
-
-        assertEquals(GenErrorMessage.VALUE_CANNOT_BE_NEGATIVE, genBusinessException.getBaseErrorMessage());
-
-    }
-
-    @Test
     void shouldNotGetRandomNumberWhenCharCountTooLong() {
 
         int charCount = 50;
@@ -53,7 +42,33 @@ class StringUtilTest {
     }
 
     @Test
-    void getRandomNumberAsString() {
+    void shouldGetRandomNumberAsString() {
+
+        int charCount = 5;
+
+        String randomNumberAsString = StringUtil.getRandomNumberAsString(charCount);
+
+        assertEquals(charCount, randomNumberAsString.length());
+    }
+
+    @Test
+    void shouldNotGetRandomNumberAsStringWhenCharCountIsNegative() {
+
+        int charCount = -1;
+
+        GenBusinessException genBusinessException = assertThrows(GenBusinessException.class, () -> StringUtil.getRandomNumberAsString(charCount));
+
+        assertEquals(GenErrorMessage.VALUE_CANNOT_BE_NEGATIVE, genBusinessException.getBaseErrorMessage());
+    }
+
+    @Test
+    void shouldGetRandomNumberAsStringWhenCharCountIsZero() {
+
+        int charCount = 0;
+
+        String randomNumberAsString = StringUtil.getRandomNumberAsString(charCount);
+
+        assertEquals("", randomNumberAsString);
     }
 
     @Test
