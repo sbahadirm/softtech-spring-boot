@@ -7,7 +7,8 @@ package com.softtech.softtechspringboot.app.gen.enums;
 public enum GenErrorMessage implements BaseErrorMessage{
 
     ITEM_NOT_FOUND("Item not found!"),
-    DATE_COULD_NOT_BE_CONVERTED("Date could not be converted!")
+    DATE_COULD_NOT_BE_CONVERTED("Date could not be converted!"),
+    VALUE_CANNOT_BE_NEGATIVE("Value cannot be negative!"),
     ;
 
     private String message;
