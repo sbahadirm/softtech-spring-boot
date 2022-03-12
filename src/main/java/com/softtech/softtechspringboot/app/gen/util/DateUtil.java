@@ -44,4 +44,10 @@ public class DateUtil {
             throw new GenBusinessException(GenErrorMessage.DATE_COULD_NOT_BE_CONVERTED);
         }
     }
+
+    private static void validateDate(LocalDate dateToConvert) {
+        if (dateToConvert == null){
+            throw new GenBusinessException(GenErrorMessage.DATE_COULD_NOT_BE_CONVERTED);
+        }
+    }
 }
