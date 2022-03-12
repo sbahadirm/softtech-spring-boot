@@ -107,4 +107,33 @@ class DateUtilTest {
         assertEquals(genBusinessException.getBaseErrorMessage(), GenErrorMessage.DATE_COULD_NOT_BE_CONVERTED);
     }
 
+    @Test
+    void shouldConvertToLocalDateTimeWhenTimeIs000000() throws ParseException {
+
+        Date date = formatterDateTime.parse("05-10-1991 00:00:00");
+
+        LocalDateTime localDateTime = DateUtil.convertToLocalDateTime(date);
+
+        assertEquals(5, localDateTime.getDayOfMonth());
+        assertEquals(10, localDateTime.getMonthValue());
+        assertEquals(1991, localDateTime.getYear());
+        assertEquals(0, localDateTime.getHour());
+        assertEquals(0, localDateTime.getMinute());
+        assertEquals(0, localDateTime.getSecond());
+    }
+
+    @Test
+    void shouldConvertToLocalDateTimeWhenTimeIs235959() throws ParseException {
+
+        Date date = formatterDateTime.parse("05-10-1991 23:59:59");
+
+        LocalDateTime localDateTime = DateUtil.convertToLocalDateTime(date);
+
+        assertEquals(5, localDateTime.getDayOfMonth());
+        assertEquals(10, localDateTime.getMonthValue());
+        assertEquals(1991, localDateTime.getYear());
+        assertEquals(23, localDateTime.getHour());
+        assertEquals(59, localDateTime.getMinute());
+        assertEquals(59, localDateTime.getSecond());
+    }
 }
