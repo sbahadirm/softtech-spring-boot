@@ -68,6 +68,15 @@ class CusCustomerServiceTest {
     }
 
     @Test
+    void shouldFindAllWhenCustomerListIsNull() {
+
+        when(cusCustomerEntityService.findAll()).thenReturn(null);
+        when(cusCustomerConverter.convertToCusCustomerDtoList(null)).thenCallRealMethod();
+
+        assertThrows(NullPointerException.class, () -> cusCustomerService.findAll());
+    }
+
+    @Test
     void save() {
     }
 
