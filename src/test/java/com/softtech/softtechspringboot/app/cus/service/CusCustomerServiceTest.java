@@ -2,6 +2,7 @@ package com.softtech.softtechspringboot.app.cus.service;
 
 import com.softtech.softtechspringboot.app.cus.converter.CusCustomerConverter;
 import com.softtech.softtechspringboot.app.cus.dto.CusCustomerDto;
+import com.softtech.softtechspringboot.app.cus.dto.CusCustomerSaveRequestDto;
 import com.softtech.softtechspringboot.app.cus.entity.CusCustomer;
 import com.softtech.softtechspringboot.app.cus.service.entityservice.CusCustomerEntityService;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,9 @@ class CusCustomerServiceTest {
 
     @Mock
     private CusCustomerConverter cusCustomerConverter;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @InjectMocks
     private CusCustomerService cusCustomerService;
@@ -77,7 +82,27 @@ class CusCustomerServiceTest {
     }
 
     @Test
-    void save() {
+    void shouldSave() {
+
+        CusCustomerSaveRequestDto cusCustomerSaveRequestDto = mock(CusCustomerSaveRequestDto.class);
+        when(cusCustomerSaveRequestDto.getPassword()).thenReturn("123");
+
+        CusCustomer cusCustomer = mock(CusCustomer.class);
+        when(cusCustomer.getId()).thenReturn(1L);
+
+        when(passwordEncoder.encode(anyString())).thenReturn("bahadir_1234_123");
+        when(cusCustomerEntityService.save(any())).thenReturn(cusCustomer);
+
+        CusCustomerDto result = cusCustomerService.save(cusCustomerSaveRequestDto);
+
+        assertEquals(1L, result.getId());
+    }
+
+    @Test
+    void shouldNotSaveWhenParameterIsNull() {
+
+        assertThrows(NullPointerException.class, () -> cusCustomerService.save(null));
+
     }
 
     @Test
