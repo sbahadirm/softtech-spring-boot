@@ -136,4 +136,24 @@ class DateUtilTest {
         assertEquals(59, localDateTime.getMinute());
         assertEquals(59, localDateTime.getSecond());
     }
+
+    @Test
+    void shouldConvertToDate() {
+
+        LocalDate localDate = LocalDate.of(1991, 10, 5);
+
+        Date date = DateUtil.convertToDate(localDate);
+
+        String format = formatterDate.format(date);
+
+        assertEquals("05-10-1991", format);
+    }
+
+    @Test
+    void shouldNotConvertToDateWhenParameterIsNull() {
+
+        GenBusinessException genBusinessException = assertThrows(GenBusinessException.class, () -> DateUtil.convertToDate(null));
+
+        assertEquals(GenErrorMessage.DATE_COULD_NOT_BE_CONVERTED, genBusinessException.getBaseErrorMessage());
+    }
 }
