@@ -13,8 +13,6 @@ public class StringUtil {
 
     public static Long getRandomNumber(int charCount){
 
-        validateCharCount(charCount);
-
         String randomNumeric = getRandomNumberAsString(charCount);
 
         Long randomLong = null;
