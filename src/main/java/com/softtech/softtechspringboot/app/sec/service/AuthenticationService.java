@@ -65,7 +65,12 @@ public class AuthenticationService {
 
         JwtUserDetails jwtUserDetails = getCurrentJwtUserDetails();
 
-        return jwtUserDetails.getId();
+        Long jwtUserDetailsId = null;
+        if (jwtUserDetails != null){
+            jwtUserDetailsId = jwtUserDetails.getId();
+        }
+
+        return jwtUserDetailsId;
     }
 
     private JwtUserDetails getCurrentJwtUserDetails() {
