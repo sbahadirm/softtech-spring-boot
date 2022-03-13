@@ -9,6 +9,7 @@ import com.softtech.softtechspringboot.app.acc.enums.AccAccountActivityType;
 import com.softtech.softtechspringboot.app.acc.enums.AccErrorMessage;
 import com.softtech.softtechspringboot.app.acc.service.entityservice.AccAccountActivityEntityService;
 import com.softtech.softtechspringboot.app.acc.service.entityservice.AccAccountEntityService;
+import com.softtech.softtechspringboot.app.gen.enums.GenErrorMessage;
 import com.softtech.softtechspringboot.app.gen.exceptions.GenBusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,8 @@ public class AccAccountActivityService {
 
     public AccAccountActivityDto withdraw(AccMoneyActivityRequestDto accMoneyActivityRequestDto) {
 
+        validateAccMoneyActivityRequestDto(accMoneyActivityRequestDto);
+
         Long accAccountId = accMoneyActivityRequestDto.getAccAccountId();
         BigDecimal amount = accMoneyActivityRequestDto.getAmount();
 
@@ -42,6 +45,8 @@ public class AccAccountActivityService {
     }
 
     public AccAccountActivityDto deposit(AccMoneyActivityRequestDto accMoneyActivityRequestDto) {
+
+        validateAccMoneyActivityRequestDto(accMoneyActivityRequestDto);
 
         Long accAccountId = accMoneyActivityRequestDto.getAccAccountId();
         BigDecimal amount = accMoneyActivityRequestDto.getAmount();
@@ -99,6 +104,12 @@ public class AccAccountActivityService {
     private void validateBalance(BigDecimal newBalance) {
         if (newBalance.compareTo(BigDecimal.ZERO) < 0){
             throw new GenBusinessException(AccErrorMessage.INSUFFICIENT_BALANCE);
+        }
+    }
+
+    private void validateAccMoneyActivityRequestDto(AccMoneyActivityRequestDto accMoneyActivityRequestDto) {
+        if (accMoneyActivityRequestDto == null){
+            throw new GenBusinessException(GenErrorMessage.PARAMETER_CANNOT_BE_NULL);
         }
     }
 }
