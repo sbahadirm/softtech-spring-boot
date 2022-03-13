@@ -5,6 +5,7 @@ import com.softtech.softtechspringboot.app.cus.dto.CusCustomerDto;
 import com.softtech.softtechspringboot.app.cus.dto.CusCustomerSaveRequestDto;
 import com.softtech.softtechspringboot.app.cus.entity.CusCustomer;
 import com.softtech.softtechspringboot.app.cus.service.entityservice.CusCustomerEntityService;
+import com.softtech.softtechspringboot.app.gen.exceptions.ItemNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -106,7 +107,26 @@ class CusCustomerServiceTest {
     }
 
     @Test
-    void delete() {
+    void shouldDelete() {
+
+        CusCustomer cusCustomer = mock(CusCustomer.class);
+
+        when(cusCustomerEntityService.getByIdWithControl(anyLong())).thenReturn(cusCustomer);
+
+        cusCustomerService.delete(anyLong());
+
+        verify(cusCustomerEntityService).getByIdWithControl(anyLong());
+        verify(cusCustomerEntityService).delete(any());
+    }
+
+    @Test
+    void shouldNotDeleteWhenIdDoesNotExist() {
+
+        when(cusCustomerEntityService.getByIdWithControl(anyLong())).thenThrow(ItemNotFoundException.class);
+
+        assertThrows(ItemNotFoundException.class, () -> cusCustomerService.delete(anyLong()));
+
+        verify(cusCustomerEntityService).getByIdWithControl(anyLong());
     }
 
     @Test
