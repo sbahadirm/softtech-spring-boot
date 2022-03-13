@@ -1,5 +1,6 @@
 package com.softtech.softtechspringboot.app.cus.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -7,6 +8,7 @@ import lombok.Data;
  * @since 1.0.0
  */
 @Data
+@Builder
 public class CusCustomerSaveRequestDto {
 
     private String name;
