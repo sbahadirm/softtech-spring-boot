@@ -130,7 +130,28 @@ class CusCustomerServiceTest {
     }
 
     @Test
-    void findById() {
+    void shouldFindById() {
+
+        Long id = 18L;
+
+        CusCustomer cusCustomer = mock(CusCustomer.class);
+        when(cusCustomer.getId()).thenReturn(id);
+
+        when(cusCustomerEntityService.getByIdWithControl(id)).thenReturn(cusCustomer);
+
+        CusCustomerDto cusCustomerDto = cusCustomerService.findById(id);
+
+        assertEquals(id, cusCustomerDto.getId());
+    }
+
+    @Test
+    void shouldNotFindByIdWhenIdDoesNotExist() {
+
+        when(cusCustomerEntityService.getByIdWithControl(anyLong())).thenThrow(ItemNotFoundException.class);
+
+        assertThrows(ItemNotFoundException.class, () -> cusCustomerService.findById(anyLong()));
+
+        verify(cusCustomerEntityService).getByIdWithControl(anyLong());
     }
 
     @Test
