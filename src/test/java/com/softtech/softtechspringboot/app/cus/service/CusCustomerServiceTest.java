@@ -3,22 +3,23 @@ package com.softtech.softtechspringboot.app.cus.service;
 import com.softtech.softtechspringboot.app.cus.converter.CusCustomerConverter;
 import com.softtech.softtechspringboot.app.cus.dto.CusCustomerDto;
 import com.softtech.softtechspringboot.app.cus.dto.CusCustomerSaveRequestDto;
+import com.softtech.softtechspringboot.app.cus.dto.CusCustomerUpdateRequestDto;
 import com.softtech.softtechspringboot.app.cus.entity.CusCustomer;
+import com.softtech.softtechspringboot.app.cus.enums.CusErrorMessage;
 import com.softtech.softtechspringboot.app.cus.service.entityservice.CusCustomerEntityService;
 import com.softtech.softtechspringboot.app.gen.exceptions.ItemNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 /**
@@ -91,6 +92,10 @@ class CusCustomerServiceTest {
         CusCustomer cusCustomer = mock(CusCustomer.class);
         when(cusCustomer.getId()).thenReturn(1L);
 
+//        try (MockedStatic<CusCustomerMapper> theMock = Mockito.mockStatic(CusCustomerMapper.class)) {
+//            theMock.when(() -> CusCustomerMapper.convertToCusCustomer(cusCustomerSaveRequestDto))
+//                    .thenReturn(cusCustomer);
+
         when(passwordEncoder.encode(anyString())).thenReturn("bahadir_1234_123");
         when(cusCustomerEntityService.save(any())).thenReturn(cusCustomer);
 
@@ -155,6 +160,48 @@ class CusCustomerServiceTest {
     }
 
     @Test
-    void update() {
+    void shouldUpdate() {
+
+        Long id = 18L;
+
+        CusCustomerUpdateRequestDto cusCustomerUpdateRequestDto = mock(CusCustomerUpdateRequestDto.class);
+        CusCustomer cusCustomer = mock(CusCustomer.class);
+        when(cusCustomer.getId()).thenReturn(id);
+
+        boolean isExist = true;
+
+        when(cusCustomerEntityService.existsById(anyLong())).thenReturn(isExist);
+        when(cusCustomerEntityService.save(any())).thenReturn(cusCustomer);
+
+        CusCustomerDto cusCustomerDto = cusCustomerService.update(cusCustomerUpdateRequestDto);
+
+        assertEquals(id, cusCustomerDto.getId());
+
+        verify(cusCustomerEntityService).existsById(anyLong());
+    }
+
+    @Test
+    void shouldNotUpdateWhenCustomerDoesNotExist() {
+
+        CusCustomerUpdateRequestDto cusCustomerUpdateRequestDto = mock(CusCustomerUpdateRequestDto.class);
+
+        when(cusCustomerEntityService.existsById(anyLong())).thenThrow(ItemNotFoundException.class);
+
+        ItemNotFoundException itemNotFoundException = assertThrows(ItemNotFoundException.class, () -> cusCustomerService.update(cusCustomerUpdateRequestDto));
+
+        verify(cusCustomerEntityService).existsById(anyLong());
+    }
+
+    @Test
+    void shouldNotUpdateWhenCustomerDoesNotExist2() {
+
+        CusCustomerUpdateRequestDto cusCustomerUpdateRequestDto = mock(CusCustomerUpdateRequestDto.class);
+
+        when(cusCustomerEntityService.existsById(anyLong())).thenReturn(false);
+
+        ItemNotFoundException itemNotFoundException = assertThrows(ItemNotFoundException.class, () -> cusCustomerService.update(cusCustomerUpdateRequestDto));
+        assertEquals(CusErrorMessage.CUSTOMER_ERROR_MESSAGE, itemNotFoundException.getBaseErrorMessage());
+
+        verify(cusCustomerEntityService).existsById(anyLong());
     }
 }

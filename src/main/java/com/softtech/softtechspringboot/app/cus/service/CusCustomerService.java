@@ -74,9 +74,8 @@ public class CusCustomerService {
 
         controlIsCustomerExist(cusCustomerUpdateRequestDto);
 
-        CusCustomer cusCustomer;
-        cusCustomer = CusCustomerMapper.INSTANCE.convertToCusCustomer(cusCustomerUpdateRequestDto);
-        cusCustomerEntityService.save(cusCustomer);
+        CusCustomer cusCustomer = CusCustomerMapper.INSTANCE.convertToCusCustomer(cusCustomerUpdateRequestDto);
+        cusCustomer = cusCustomerEntityService.save(cusCustomer);
 
         CusCustomerDto cusCustomerDto = CusCustomerMapper.INSTANCE.convertToCusCustomerDto(cusCustomer);
 
