@@ -1,8 +1,10 @@
 package com.softtech.softtechspringboot.app.acc.service;
 
 import com.softtech.softtechspringboot.app.acc.converter.AccAccountMapper;
+import com.softtech.softtechspringboot.app.acc.dto.AccMoneyActivityDto;
 import com.softtech.softtechspringboot.app.acc.dto.AccMoneyTransferDto;
 import com.softtech.softtechspringboot.app.acc.dto.AccMoneyTransferSaveRequestDto;
+import com.softtech.softtechspringboot.app.acc.entity.AccAccountActivity;
 import com.softtech.softtechspringboot.app.acc.entity.AccMoneyTransfer;
 import com.softtech.softtechspringboot.app.acc.enums.AccAccountActivityType;
 import com.softtech.softtechspringboot.app.acc.service.entityservice.AccMoneyTransferEntityService;
@@ -34,8 +36,20 @@ public class AccMoneyTransferService {
         Long accountIdTo = accMoneyTransfer.getAccountIdTo();
         BigDecimal amount = accMoneyTransfer.getAmount();
 
-        accAccountActivityService.moneyOut(accountIdFrom, amount, AccAccountActivityType.SEND);
-        accAccountActivityService.moneyIn(accountIdTo, amount, AccAccountActivityType.GET);
+        AccMoneyActivityDto accMoneyActivityDtoOut = AccMoneyActivityDto.builder()
+                .accAccountId(accountIdFrom)
+                .amount(amount)
+                .activityType(AccAccountActivityType.SEND)
+                .build();
+
+        AccMoneyActivityDto accMoneyActivityDtoIn = AccMoneyActivityDto.builder()
+                .accAccountId(accountIdTo)
+                .amount(amount)
+                .activityType(AccAccountActivityType.GET)
+                .build();
+
+        accAccountActivityService.moneyOut(accMoneyActivityDtoOut);
+        accAccountActivityService.moneyIn(accMoneyActivityDtoIn);
 
         accMoneyTransfer = accMoneyTransferEntityService.save(accMoneyTransfer);
         AccMoneyTransferDto accMoneyTransferDto = AccAccountMapper.INSTANCE.convertToAccMoneyTransferDto(accMoneyTransfer);

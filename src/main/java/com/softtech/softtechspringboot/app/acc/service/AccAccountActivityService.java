@@ -2,6 +2,7 @@ package com.softtech.softtechspringboot.app.acc.service;
 
 import com.softtech.softtechspringboot.app.acc.converter.AccAccountMapper;
 import com.softtech.softtechspringboot.app.acc.dto.AccAccountActivityDto;
+import com.softtech.softtechspringboot.app.acc.dto.AccMoneyActivityDto;
 import com.softtech.softtechspringboot.app.acc.dto.AccMoneyActivityRequestDto;
 import com.softtech.softtechspringboot.app.acc.entity.AccAccount;
 import com.softtech.softtechspringboot.app.acc.entity.AccAccountActivity;
@@ -37,7 +38,13 @@ public class AccAccountActivityService {
         Long accAccountId = accMoneyActivityRequestDto.getAccAccountId();
         BigDecimal amount = accMoneyActivityRequestDto.getAmount();
 
-        AccAccountActivity accAccountActivity = moneyOut(accAccountId, amount, AccAccountActivityType.WITHDRAW);
+        AccMoneyActivityDto accMoneyActivityDto = AccMoneyActivityDto.builder()
+                .accAccountId(accAccountId)
+                .amount(amount)
+                .activityType(AccAccountActivityType.WITHDRAW)
+                .build();
+
+        AccAccountActivity accAccountActivity = moneyOut(accMoneyActivityDto);
 
         AccAccountActivityDto accAccountActivityDto = AccAccountMapper.INSTANCE.convertToAccAccountActivityDto(accAccountActivity);
 
@@ -51,14 +58,26 @@ public class AccAccountActivityService {
         Long accAccountId = accMoneyActivityRequestDto.getAccAccountId();
         BigDecimal amount = accMoneyActivityRequestDto.getAmount();
 
-        AccAccountActivity accAccountActivity = moneyIn(accAccountId, amount, AccAccountActivityType.DEPOSIT);
+        AccMoneyActivityDto accMoneyActivityDto = AccMoneyActivityDto.builder()
+                .accAccountId(accAccountId)
+                .amount(amount)
+                .activityType(AccAccountActivityType.DEPOSIT)
+                .build();
+
+        AccAccountActivity accAccountActivity = moneyIn(accMoneyActivityDto);
 
         AccAccountActivityDto accAccountActivityDto = AccAccountMapper.INSTANCE.convertToAccAccountActivityDto(accAccountActivity);
 
         return accAccountActivityDto;
     }
 
-    public AccAccountActivity moneyOut(Long accountId, BigDecimal amount, AccAccountActivityType activityType) {
+    public AccAccountActivity moneyOut(AccMoneyActivityDto accMoneyActivityDto) {
+
+        validateAccMoneyActivityDto(accMoneyActivityDto);
+
+        Long accountId = accMoneyActivityDto.getAccAccountId();
+        BigDecimal amount = accMoneyActivityDto.getAmount();
+        AccAccountActivityType activityType = accMoneyActivityDto.getActivityType();
 
         AccAccount accAccount = accAccountEntityService.getByIdWithControl(accountId);
 
@@ -73,7 +92,13 @@ public class AccAccountActivityService {
         return accAccountActivity;
     }
 
-    public AccAccountActivity moneyIn(Long accountId, BigDecimal amount, AccAccountActivityType activityType) {
+    public AccAccountActivity moneyIn(AccMoneyActivityDto accMoneyActivityDto) {
+
+        validateAccMoneyActivityDto(accMoneyActivityDto);
+
+        Long accountId = accMoneyActivityDto.getAccAccountId();
+        BigDecimal amount = accMoneyActivityDto.getAmount();
+        AccAccountActivityType activityType = accMoneyActivityDto.getActivityType();
 
         AccAccount accAccount = accAccountEntityService.getByIdWithControl(accountId);
         BigDecimal newBalance = accAccount.getCurrentBalance().add(amount);
@@ -109,6 +134,13 @@ public class AccAccountActivityService {
 
     private void validateAccMoneyActivityRequestDto(AccMoneyActivityRequestDto accMoneyActivityRequestDto) {
         if (accMoneyActivityRequestDto == null){
+            throw new GenBusinessException(GenErrorMessage.PARAMETER_CANNOT_BE_NULL);
+        }
+    }
+
+    private void validateAccMoneyActivityDto(AccMoneyActivityDto accMoneyActivityDto) {
+
+        if (accMoneyActivityDto == null){
             throw new GenBusinessException(GenErrorMessage.PARAMETER_CANNOT_BE_NULL);
         }
     }
