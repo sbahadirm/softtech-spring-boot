@@ -2,8 +2,11 @@ package com.softtech.softtechspringboot.app.cus.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.softtech.softtechspringboot.SofttechSpringBootApplication;
+import com.softtech.softtechspringboot.app.BaseTest;
+import com.softtech.softtechspringboot.app.config.H2TestProfileJPAConfig;
 import com.softtech.softtechspringboot.app.cus.dto.CusCustomerSaveRequestDto;
-import com.softtech.softtechspringboot.app.gen.dto.RestResponse;
+import com.softtech.softtechspringboot.app.cus.dto.CusCustomerUpdateRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,14 +28,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @since 1.0.0
  */
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest
-class CusCustomerControllerTest {
+@SpringBootTest(classes = {SofttechSpringBootApplication.class, H2TestProfileJPAConfig.class})
+class CusCustomerControllerTest extends BaseTest {
 
     private static final String BASE_PATH = "/api/v1/customers";
 
     private MockMvc mockMvc;
-
-    private ObjectMapper objectMapper;
 
     @Autowired
     private WebApplicationContext context;
@@ -50,9 +51,7 @@ class CusCustomerControllerTest {
                 get(BASE_PATH).content("").contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk()).andReturn();
 
-        RestResponse restResponse = objectMapper.readValue(result.getResponse().getContentAsString(), RestResponse.class);
-
-        boolean isSuccess = restResponse.isSuccess();
+        boolean isSuccess = isSuccess(result);
 
         assertTrue(isSuccess);
 
@@ -81,25 +80,67 @@ class CusCustomerControllerTest {
                 post(BASE_PATH).content(content).contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk()).andReturn();
 
-        RestResponse restResponse = objectMapper.readValue(result.getResponse().getContentAsString(), RestResponse.class);
-
-        boolean isSuccess = restResponse.isSuccess();
+        boolean isSuccess = isSuccess(result);
 
         assertTrue(isSuccess);
 
     }
 
     @Test
-    void findById() {
+    void findById() throws Exception {
+
+        MvcResult result = mockMvc.perform(
+                get(BASE_PATH + "/1").content("1L").contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk()).andReturn();
+
+        boolean isSuccess = isSuccess(result);
+
+        assertTrue(isSuccess);
+
     }
 
-
-
     @Test
-    void delete() {
+    void deleteTest() throws Exception {
+
+        MvcResult result = mockMvc.perform(
+                delete(BASE_PATH + "/2202").content("2202").contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk()).andReturn();
+
+        boolean isSuccess = isSuccess(result);
+
+        assertTrue(isSuccess);
     }
 
     @Test
-    void update() {
+    void shouldNoDeleteWhenIdDoesNotExist() throws Exception {
+
+        MvcResult result = mockMvc.perform(
+                delete(BASE_PATH + "/9999").content("9999").contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isNotFound()).andReturn();
+
+        boolean isSuccess = isSuccess(result);
+
+        assertFalse(isSuccess);
+    }
+
+    @Test
+    void update() throws Exception {
+
+        CusCustomerUpdateRequestDto cusCustomerUpdateRequestDto = new CusCustomerUpdateRequestDto();
+        cusCustomerUpdateRequestDto.setId(2052L);
+        cusCustomerUpdateRequestDto.setName("test2");
+        cusCustomerUpdateRequestDto.setSurname("test2");
+        cusCustomerUpdateRequestDto.setIdentityNo(12345678918L);
+        cusCustomerUpdateRequestDto.setPassword("abcdefgh");
+
+        String content = objectMapper.writeValueAsString(cusCustomerUpdateRequestDto);
+
+        MvcResult result = mockMvc.perform(
+                put(BASE_PATH).content(content).contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk()).andReturn();
+
+        boolean isSuccess = isSuccess(result);
+
+        assertTrue(isSuccess);
     }
 }
