@@ -1,15 +1,12 @@
 package com.softtech.softtechspringboot.app.kafka.producer;
 
-import com.softtech.softtechspringboot.app.kafka.dto.KafkaMessage;
+import com.softtech.softtechspringboot.app.kafka.dto.LogMessage;
+import com.softtech.softtechspringboot.app.log.service.LogService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.UUID;
 
 /**
  * @author Bahadır Memiş
@@ -20,22 +17,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class KafkaMessageController {
 
-    @Value("${softtech.kafka.topic}")
-    private String topic;
-
-    private final KafkaTemplate<String, KafkaMessage> kafkaTemplate;
+    private final LogService logService;
 
     @PostMapping
-    public void sendMessage(@RequestBody KafkaMessage kafkaMessage){
+    public void sendMessage(@RequestBody LogMessage logMessage){
 
         System.out.println("starting to produce");
 
-        for (int i = 0; i< 9999; i++){
-//            String id = UUID.randomUUID().toString();
-            String id = String.valueOf(i);
-            kafkaMessage.setId(Long.valueOf(id));
-            kafkaTemplate.send(topic, id, kafkaMessage);
-        }
+        logService.log(logMessage);
 
         System.out.println("message sent from producer");
     }

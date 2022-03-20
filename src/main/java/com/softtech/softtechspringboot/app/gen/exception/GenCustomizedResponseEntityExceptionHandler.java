@@ -3,6 +3,9 @@ package com.softtech.softtechspringboot.app.gen.exception;
 import com.softtech.softtechspringboot.app.gen.dto.RestResponse;
 import com.softtech.softtechspringboot.app.gen.exceptions.GenBusinessException;
 import com.softtech.softtechspringboot.app.gen.exceptions.ItemNotFoundException;
+import com.softtech.softtechspringboot.app.kafka.dto.LogMessage;
+import com.softtech.softtechspringboot.app.log.service.LogService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -21,7 +25,10 @@ import java.util.Date;
  */
 @RestController
 @ControllerAdvice
+@RequiredArgsConstructor
 public class GenCustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+
+    private final LogService logService;
 
     @ExceptionHandler
     public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest webRequest){
@@ -34,6 +41,8 @@ public class GenCustomizedResponseEntityExceptionHandler extends ResponseEntityE
 
         RestResponse<GenExceptionResponse> restResponse = RestResponse.error(genExceptionResponse);
         restResponse.setMessages(message);
+
+        logError(genExceptionResponse);
 
         return new ResponseEntity<>(restResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -50,6 +59,8 @@ public class GenCustomizedResponseEntityExceptionHandler extends ResponseEntityE
         RestResponse<GenExceptionResponse> restResponse = RestResponse.error(genExceptionResponse);
         restResponse.setMessages(message);
 
+        logError(genExceptionResponse);
+
         return new ResponseEntity<>(restResponse, HttpStatus.NOT_FOUND);
     }
 
@@ -65,6 +76,8 @@ public class GenCustomizedResponseEntityExceptionHandler extends ResponseEntityE
         RestResponse<GenExceptionResponse> restResponse = RestResponse.error(genExceptionResponse);
         restResponse.setMessages(message);
 
+        logError(genExceptionResponse);
+
         return new ResponseEntity<>(restResponse, HttpStatus.NOT_FOUND);
     }
 
@@ -79,6 +92,21 @@ public class GenCustomizedResponseEntityExceptionHandler extends ResponseEntityE
         RestResponse<GenExceptionResponse> restResponse = RestResponse.error(genExceptionResponse);
         restResponse.setMessages(message);
 
+        logError(genExceptionResponse);
+
         return new ResponseEntity<>(restResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    private void logError(GenExceptionResponse genExceptionResponse) {
+
+        String message = genExceptionResponse.getMessage();
+        String description = genExceptionResponse.getDetail();
+        LogMessage logMessage = LogMessage.builder()
+                .message(message)
+                .description(description)
+                .dateTime(new Date())
+                .build();
+
+        logService.log(logMessage);
     }
 }

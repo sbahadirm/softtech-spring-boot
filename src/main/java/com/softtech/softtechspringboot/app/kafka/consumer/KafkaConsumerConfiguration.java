@@ -1,6 +1,6 @@
 package com.softtech.softtechspringboot.app.kafka.consumer;
 
-import com.softtech.softtechspringboot.app.kafka.dto.KafkaMessage;
+import com.softtech.softtechspringboot.app.kafka.dto.LogMessage;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,8 +30,8 @@ public class KafkaConsumerConfiguration {
     private String kafkaGroupId;
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, KafkaMessage> kafkaListenerContainerFactory(){
-        ConcurrentKafkaListenerContainerFactory<String, KafkaMessage> factory =
+    public ConcurrentKafkaListenerContainerFactory<String, LogMessage> kafkaListenerContainerFactory(){
+        ConcurrentKafkaListenerContainerFactory<String, LogMessage> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
 
         factory.setConsumerFactory(consumerFactory());
@@ -40,12 +40,12 @@ public class KafkaConsumerConfiguration {
     }
 
     @Bean
-    public ConsumerFactory<String, KafkaMessage> consumerFactory(){
+    public ConsumerFactory<String, LogMessage> consumerFactory(){
 
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaAddress);
         config.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaGroupId);
-        config.put(JsonDeserializer.VALUE_DEFAULT_TYPE, KafkaMessage.class);
+        config.put(JsonDeserializer.VALUE_DEFAULT_TYPE, LogMessage.class);
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
 

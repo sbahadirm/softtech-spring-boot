@@ -1,6 +1,6 @@
 package com.softtech.softtechspringboot.app.kafka.producer;
 
-import com.softtech.softtechspringboot.app.kafka.dto.KafkaMessage;
+import com.softtech.softtechspringboot.app.kafka.dto.LogMessage;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +27,7 @@ public class KafkaProducerConfiguration {
     private String kafkaAddress;
 
     @Bean
-    public KafkaTemplate<String, KafkaMessage> kafkaTemplate(){
+    public KafkaTemplate<String, LogMessage> kafkaTemplate(){
         return new KafkaTemplate<>(producerFactory());
     }
 
