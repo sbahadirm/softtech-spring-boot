@@ -35,6 +35,15 @@ public class AccAccountService {
         return accAccountDtoList;
     }
 
+    public List<AccAccountDto> findAll(Optional<Integer> pageOptional, Optional<Integer> sizeOptional) {
+
+        List<AccAccount> accAccountList = accAccountEntityService.findAllActiveAccAccountList(pageOptional, sizeOptional);
+
+        List<AccAccountDto> accAccountDtoList = AccAccountMapper.INSTANCE.convertToAccAccountDtoList(accAccountList);
+
+        return accAccountDtoList;
+    }
+
     public AccAccountDto findById(Long id) {
 
         AccAccount accAccount = accAccountEntityService.getByIdWithControl(id);

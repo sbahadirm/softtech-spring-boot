@@ -8,6 +8,7 @@ import com.softtech.softtechspringboot.app.sec.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public abstract class BaseEntityService<E extends BaseEntity, D extends JpaRepository<E, Long>> {
+
+    private static final Integer DEFAULT_PAGE = 0;
+    private static final Integer DEFAULT_SIZE = 10;
 
     private final D dao;
 
@@ -98,5 +102,31 @@ public abstract class BaseEntityService<E extends BaseEntity, D extends JpaRepos
     public Long getCurrentCustomerId() {
         Long currentCustomerId = authenticationService.getCurrentCustomerId();
         return currentCustomerId;
+    }
+
+    protected PageRequest getPageRequest(Optional<Integer> pageOptional, Optional<Integer> sizeOptional) {
+        Integer page = getPage(pageOptional);
+        Integer size = getSize(sizeOptional);
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return pageRequest;
+    }
+
+    protected Integer getSize(Optional<Integer> sizeOptional) {
+
+        Integer size = DEFAULT_SIZE;
+        if (sizeOptional.isPresent()){
+            size = sizeOptional.get();
+        }
+        return size;
+    }
+
+    protected Integer getPage(Optional<Integer> pageOptional) {
+
+        Integer page = DEFAULT_PAGE;
+        if (pageOptional.isPresent()){
+            page = pageOptional.get();
+        }
+        return page;
     }
 }

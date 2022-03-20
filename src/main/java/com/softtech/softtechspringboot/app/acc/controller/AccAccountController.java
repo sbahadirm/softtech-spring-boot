@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Bahadır Memiş
@@ -27,9 +28,12 @@ public class AccAccountController {
 
     @Operation(tags = "Account Controller")
     @GetMapping
-    public ResponseEntity getAll(){
+    public ResponseEntity getAll(
+            Optional<Integer> pageOptional,
+            Optional<Integer> sizeOptional
+    ){
 
-        List<AccAccountDto> accAccountDtoList = accAccountService.findAll();
+        List<AccAccountDto> accAccountDtoList = accAccountService.findAll(pageOptional, sizeOptional);
 
         return ResponseEntity.ok(RestResponse.of(accAccountDtoList));
     }
