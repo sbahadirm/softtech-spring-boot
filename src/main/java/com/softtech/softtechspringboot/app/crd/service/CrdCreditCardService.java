@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Bahadır Memiş
@@ -315,6 +316,18 @@ public class CrdCreditCardService {
 
         List<CrdCreditCardActivity> crdCreditCardActivityList = crdCreditCardActivityEntityService
                 .findAllByCrdCreditCardIdAndTransactionDateBetween(id, startDate, endDate);
+
+        List<CrdCreditCardActivityDto> result = CrdCreditCardActivityMapper.INSTANCE.convertToCrdCreditCardActivityDtoList(crdCreditCardActivityList);
+
+        return result;
+    }
+
+    public List<CrdCreditCardActivityDto> findAllActivities(Long id, Date startDate, Date endDate,
+                                                            Optional<Integer> pageOptional, Optional<Integer> sizeOptional) {
+
+        List<CrdCreditCardActivity> crdCreditCardActivityList = crdCreditCardActivityEntityService
+                .findAllByCrdCreditCardIdAndTransactionDateBetween(id, startDate, endDate,
+                        pageOptional, sizeOptional);
 
         List<CrdCreditCardActivityDto> result = CrdCreditCardActivityMapper.INSTANCE.convertToCrdCreditCardActivityDtoList(crdCreditCardActivityList);
 

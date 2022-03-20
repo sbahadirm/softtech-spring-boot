@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Bahadır Memiş
@@ -91,10 +92,12 @@ public class CrdCreditCardController {
     public ResponseEntity findAllActivities(
             @PathVariable Long id,
             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
-            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate,
+            Optional<Integer> pageOptional,
+            Optional<Integer> sizeOptional
     ){
 
-        List<CrdCreditCardActivityDto> crdCreditCardActivityDtoList = crdCreditCardService.findAllActivities(id, startDate, endDate);
+        List<CrdCreditCardActivityDto> crdCreditCardActivityDtoList = crdCreditCardService.findAllActivities(id, startDate, endDate, pageOptional, sizeOptional);
 
         return ResponseEntity.ok(RestResponse.of(crdCreditCardActivityDtoList));
     }
